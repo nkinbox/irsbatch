@@ -10,19 +10,19 @@
             <h6 class="nav-header">General</h6>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="index.php">
+            <a class="nav-link" href="index.php">
                 <i class="batch-icon batch-icon-browser-alt"></i>
                 Dashboard 
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="signup.php">
+            <a class="nav-link{{(request()->route()->getName() == 'SignUpForm') ? ' active' : ''}}" href="{{ route('SignUpForm') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Admission Form
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admission-approval.php">
+            <a class="nav-link{{(request()->route()->getName() == 'PendingApprovals') ? ' active' : ''}}" href="{{ route('PendingApprovals') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Admission Approval
             </a>
@@ -169,6 +169,4 @@
         </li>
 
     </ul>
-
-    
 </nav>

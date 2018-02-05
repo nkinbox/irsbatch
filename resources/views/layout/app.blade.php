@@ -203,9 +203,9 @@
 				</a>
 			</li>
 			<li><a class="dropdown-item" href="profiles-member-profile.html">Settings</a></li>
-			<li><a class="dropdown-item" href="" onclick="event.preventDefault();
+			<li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
 				document.getElementById('logout-form').submit();">Logout</a>
-			<form id="logout-form" action="" method="POST" style="display: none;">
+			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 			{{ csrf_field() }}
 			</form>
 			</li>
@@ -234,13 +234,11 @@
 <script type="text/javascript" src="{{ asset('plugins/jquery_visible/jquery.visible.min.js') }}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script type="text/javascript" src="{{ asset('js/misc/ie10-viewport-bug-workaround.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('js/misc/holder.min.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/imagepick.js') }}"></script>
 </body>
 </html>
