@@ -38,4 +38,9 @@ $(document).ready(function() {
        $(".file-upload1").click();
   
     });
+    $("#addNewDoc").on('click', function(e){
+        e.preventDefault();
+        var i = $("#docsContainer").children().length;
+        $("#docsContainer").append('<div class="col-md-3" style="padding-top:2em"><div class="form-group"><label class="active">Document Name</label><input type="text"  class="form-control" name="docs_name[' + i + ']" placeholder="Document Name" required><input type="file"  class="form-control" name="docs[' + i + '][]" multiple required></div></div>');
+    });
   });

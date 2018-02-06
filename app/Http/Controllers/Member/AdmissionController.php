@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Documents;
+use App\Rules\document;
 
 class AdmissionController extends Controller
 {   
@@ -55,8 +56,8 @@ class AdmissionController extends Controller
             "nominee_address" => 'required|max:200',
             "photograph" => 'required|image|max:2000',
             "nominee_photograph" => 'required|image|max:2000',
-            "docs_name.*" => 'nullable|string|max:100',
-            "docs.*" => 'nullable|image|max:2000',
+            "docs_name.*" => 'required|string|max:100',
+            "docs" => ['required', new document],
         ]);
         $photograph = null;
         if($request->hasFile('photograph')) {
@@ -75,8 +76,10 @@ class AdmissionController extends Controller
             );
         }
         $introduce_no = null;
-        if($request->introduce_no != null)
+        if($request->introduce_no != null) {
         $introduce_no = User::select('id')->where('membership_code', $request->introduce_no)->first();
+        $introduce_no = $introduce_no->id;
+        }
         $user = new User;
         $user->salutation = $request->salutation;
         $user->name = $request->name;
@@ -96,7 +99,7 @@ class AdmissionController extends Controller
         $user->pan_card = $request->pan_card;
         $user->id_number = $request->id_number;
         $user->railway_id = $request->railway_id;
-        $user->introduce_no = $introduce_no->id;
+        $user->introduce_no = $introduce_no;
         $user->pf_no = $request->pf_no;
         $user->nominee_salutation = $request->nominee_salutation;
         $user->nominee_name = $request->nominee_name;
@@ -112,18 +115,17 @@ class AdmissionController extends Controller
         $user->nominee_photograph = $nominee_photograph;
         $user->save();
 
-        if($request->hasFile('docs')) {
-            $documents = array();
-        foreach($request->file('docs') as $key=>$doc) {
-            $extn = $doc->getClientOriginalExtension();
-            $document = md5(str_random(20).time()) . '.' .$extn;
-            $doc->storeAs(
-                'documents', $document
-            );
-            $docname = "(name not given)";
-            if(array_key_exists($key, $request->docs_name) && $request->docs_name[$key] != null)
-            $docname = $request->docs_name[$key];
-            $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document);
+        if(count($request->docs) > 0) {
+        foreach($request->docs as $key => $docs) {
+            foreach($docs as $doc) {
+                $extn = $doc->getClientOriginalExtension();
+                $document = md5(str_random(20).time()) . '.' .$extn;
+                $doc->storeAs(
+                    'documents', $document
+                );
+                $docname = $request->docs_name[$key];
+                $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document);
+            }
         }
         Documents::insert($documents);
         }

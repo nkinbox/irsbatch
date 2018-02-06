@@ -284,54 +284,28 @@
             <p class="lead" style="font-weight: bold">
             Upload Documents
             </p>
-            <div class="row">
-                <div class="col-md-2">
+            <a href="#" class="btn btn-default" id="addNewDoc">Add New Document</a>
+            <div class="row" id="docsContainer">
+                <div class="col-md-3" style="padding-top:2em">
                 <div class="form-group">
                     <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
+                    <input type="text"  class="form-control" name="docs_name[0]" placeholder="Document Name" value="voter ID / Aadhar card" readonly>
+                    <input type="file"  class="form-control" name="docs[0][]" multiple required>
                 </div>
-
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3" style="padding-top:2em">
                 <div class="form-group">
                     <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
+                    <input type="text"  class="form-control" name="docs_name[1]" placeholder="Document Name" value="Railways ID card" readonly>
+                    <input type="file"  class="form-control" name="docs[1][]" multiple required>
                 </div>
-
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3" style="padding-top:2em">
                 <div class="form-group">
                     <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
+                    <input type="text"  class="form-control" name="docs_name[2]" placeholder="Document Name" value="PAN Card" readonly>
+                    <input type="file"  class="form-control" name="docs[2][]" multiple required>
                 </div>
-
-                </div>
-                <div class="col-md-2">
-                <div class="form-group">
-                    <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
-                </div>
-
-                </div>
-                <div class="col-md-2">
-                <div class="form-group">
-                    <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
-                </div>
-
-                </div>
-                <div class="col-md-2">
-                <div class="form-group">
-                    <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[]" placeholder="Document Name">
-                    <input type="file"  class="form-control" name="docs[]">
-                </div>
-
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -344,4 +318,5 @@
 </div>
 
 </main>
+
 @endsection
