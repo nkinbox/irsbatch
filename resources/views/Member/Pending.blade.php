@@ -29,7 +29,9 @@
                         <th>Hq</th>
                         <th>Railway Id</th>
                         <th>Applied On</th>
-                        <th>Cheque No</th>
+                        <th>Cheque Details</th>
+                        <th>Voter/Aadhar</th>
+                        <th>PAN Card</th>
                         <th>MemberShip NO</th>
                         <th>ADM Incharge</th>
                         <th>Cashier </th>
@@ -48,7 +50,9 @@
                         <td>{{ $member->hq }}</td>
                         <td>{{ $member->railway_id }}</td>
                         <td>{{ $member->applied_on}}</td>
-                        <td>Cheque No</td>
+                        <td>{{ $member->admission_cheque }}<br>(&#8377;{{ $member->cheque_amount }})</td>
+                        <td>{{ $member->id_number }}</td>
+                        <td>{{ $member->pan_card }}</td>
                         <td><code>{{ $membership_code }}</code></td>
                         <td>
                             @if($member->adm_incharge == null)

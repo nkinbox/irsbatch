@@ -69,33 +69,33 @@
 
             <div class="form-group">
                 <label for="Address" class="active">Current Address</label>
-                <input id="Address" type="text" class="form-control" name="address" placeholder="current_address" value="{{ old('address') }}">
+                <textarea rows="5" wrap="hard" id="Address" type="text" class="form-control" name="address" placeholder="current_address">{{ old('address') }}</textarea>
             </div>
 
             <div class="row">
             <div class="col-md-4">
             <div class="form-group">
                 <label for="dob" class="active">D.O.B</label>
-                <input id="dob" type="text" class="form-control" name="dob" placeholder="dob" value="{{ old('dob') }}">
+                <input id="dob" type="date" class="form-control" name="dob" placeholder="dob" value="{{ old('dob') }}">
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label for="doa" class="active">D.O.A</label>
-                <input id="doa" type="text" class="form-control" name="doa" placeholder="doa" value="{{ old('doa') }}">
+                <input id="doa" type="date" class="form-control" name="doa" placeholder="doa" value="{{ old('doa') }}">
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label for="dor" class="active">D.O.R</label>
-                <input id="dor" type="text" class="form-control" name="dor" placeholder="dor" value="{{ old('dor') }}">
+                <input id="dor" type="date" class="form-control" name="dor" placeholder="dor" value="{{ old('dor') }}">
             </div>
             </div>
             </div>
 
             <div class="form-group">
                 <label for="PAddress" class="active">Permanent Address</label>
-                <input id="PAddress" type="text" class="form-control" name="permanent_address" placeholder="permanent_address" value="{{ old('permanent_address') }}">
+                <textarea rows="5" wrap="hard" id="PAddress" type="text" class="form-control" name="permanent_address" placeholder="permanent_address">{{ old('permanent_address') }}</textarea>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -105,10 +105,10 @@
                 </div>
                 </div>
                 <div class="col-md-6">
-                <!--div class="form-group">
-                    <label for="altmobile" class="active">Alt Mobile Number</label>
-                    <input id="altmobile" type="text" class="form-control" name="altmobile_no" placeholder="altmobile_no" value="{{ old('altmobile_no') }}">
-                </div-->
+                <div class="form-group">
+                    <label for="whatsapp_no" class="active">WhatsApp Mobile Number</label>
+                    <input id="whatsapp_no" type="text" class="form-control" name="whatsapp_no" placeholder="whatsapp_no" value="{{ old('whatsapp_no') }}">
+                </div>
                 </div>
             </div>
             <div class="row">
@@ -167,14 +167,51 @@
             <div class="row">
                 <div class="col-md-6">
                 <div class="form-group">
-                <label for="Introduce" class="active">Introduce Number</label>
-                <input id="Introduce" type="text" class="form-control" name="introduce_no" placeholder="Introduce Number" value="{{ old('introduce_no') }}">
+                <label for="Introduce" class="active">Introducer Membership Number</label>
+                <input id="Introduce" type="text" class="form-control" name="introduce_no" placeholder="Introducer Membership Number" value="{{ old('introduce_no') }}">
                 </div>
                 </div>
                 <div class="col-md-6">
                 <div class="form-group">
                 <label for="pfno" class="active">P.F. No</label>
                 <input id="pfno" type="text" class="form-control" name="pf_no" placeholder="pf_no" value="{{ old('pf_no') }}">
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="bloodgroup" class="active">Blood Group</label>
+                        <select id="bloodgroup" name="blood_group" class="form-control">
+                            <option{{ (old('blood_group') == "A+") ? ' selected' : '' }}>A+</option>
+                            <option{{ (old('blood_group') == "A-") ? ' selected' : '' }}>A-</option>
+                            <option{{ (old('blood_group') == "B+") ? ' selected' : '' }}>B+</option>
+                            <option{{ (old('blood_group') == "B-") ? ' selected' : '' }}>B-</option>
+                            <option{{ (old('blood_group') == "O+") ? ' selected' : '' }}>O+</option>
+                            <option{{ (old('blood_group') == "O-") ? ' selected' : '' }}>O-</option>
+                            <option{{ (old('blood_group') == "AB+") ? ' selected' : '' }}>AB+</option>
+                            <option{{ (old('blood_group') == "AB-") ? ' selected' : '' }}>AB-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <hr style="border:1px solid #122f3b">
+            <p class="lead" style="font-weight: bold">
+            Cheque Details
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
+                <label for="chequeno" class="active">Cheque Number</label>
+                <input id="chequeno" type="text" class="form-control" name="admission_cheque" placeholder="Admission Cheque Number" value="{{ old('admission_cheque') }}">
+                </div>
+                </div>
+                <div class="col-md-6">
+                <div class="form-group">
+                <label for="chqamno" class="active">Amount</label>
+                <input id="chqamno" type="text" class="form-control" name="cheque_amount" placeholder="cheque_amount" value="{{ old('cheque_amount', '1000') }}">
                 </div>
                 </div>
             </div>
@@ -230,7 +267,7 @@
                 </div-->
                 </div>
             </div>
-            <div class="row">
+            <!--div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                 <label for="nominee_bankac" class="active">Bank A/c Number</label>
@@ -243,11 +280,11 @@
                 <input id="nominee_bankifsc" type="text" class="form-control" name="nominee_ifsc_code" placeholder="ifsc_code"  value="{{ old('nominee_ifsc_code') }}">
             </div>
                 </div>
-            </div>
+            </div-->
 
 
 
-            <div class="row">
+            <!--div class="row">
             <div class="col-md-6">
                     <div class="form-group">
                         <label for="nominee_bankname" class="active">Bank Name</label>
@@ -260,11 +297,11 @@
                 <input id="nominee_branch" type="text" class="form-control" name="nominee_branch_name" placeholder="branch_name" value="{{ old('nominee_branch_name') }}">
                 </div>
                 </div>
-            </div>
+            </div-->
 
             <div class="form-group">
                 <label for="nAddress" class="active"> Nominee Address</label>
-                <input id="nAddress" type="text" class="form-control" name="nominee_address" placeholder="address" value="{{ old('nominee_address') }}">
+                <textarea rows="5" wrap="hard" id="nAddress" type="text" class="form-control" name="nominee_address" placeholder="nominee address">{{ old('nominee_address') }}</textarea>
             </div>
             <br>
             <div class="row"><div class="col-md-3 col-md-offset-3"></div>

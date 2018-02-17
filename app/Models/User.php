@@ -15,4 +15,7 @@ class User extends Authenticatable
     public function documents() {
         return $this->hasMany('App\Models\Documents', 'member_id');
     }
+    public function introduced_by() {
+        return $this->hasOne('App\Models\User', 'id', 'introduce_no');
+    }
 }

@@ -18,6 +18,16 @@
                     <div class="row">
                       <div class="col-md-4">
                         <img src="{{ asset('photograph/' . $member->photograph) }}" style="width:100px">
+                        <br>
+                        @if($member->membership)
+                        <div><code>Membership INACTIVE</code></div>
+                        @else
+                        <div>{{$member->membership_code}}</div>
+                        <!--div>
+                            //$member->position_id
+                          //$member->introduced_by->name
+                        </div-->
+                        @endif
                       </div>
                       <div class="col-md-8">
                         <table class="table">
@@ -28,35 +38,35 @@
                               <td>{{$member->hq}}</td>
                             </tr>
                             <tr>
-                              <td>Father/Husband: {{$member->father_husband_name}}</td>
+                              <td><b>Father/Husband:</b> {{$member->father_husband_name}}</td>
+                              <td></td>
+                              <td><b>BloodGroup:</b> {{ $member->blood_group }}</td>
+                            </tr>
+                            <tr>
+                              <td><b>RailwayId:</b> {{$member->railway_id}}</td>
+                              <td><b>VoterId/Aadhar:</b> {{$member->id_number}}</td>
+                              <td><b>PAN:</b> {{$member->pan_card}}</td>
+                            </tr>
+                            <tr>
+                              <td><b>Mob:</b> {{$member->mobile_no}}</td>
+                              <td><b>WApp:</b> {{$member->whatsapp_no}}</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td><b>PF:</b> {{$member->pf_no}}</td>
                               <td></td>
                               <td></td>
                             </tr>
                             <tr>
-                              <td>RailwayId: {{$member->railway_id}}</td>
-                              <td>VoterId/Aadhar: {{$member->id_number}}</td>
-                              <td></td>
+                              <td><b>DOB:</b> {{date('d-M-y',strtotime($member->dob))}}</td>
+                              <td><b>DOA:</b> {{date('d-M-y',strtotime($member->doa))}}</td>
+                              <td><b>DOR:</b> {{date('d-M-y',strtotime($member->dor))}}</td>
                             </tr>
                             <tr>
-                              <td>PAN: {{$member->pan_card}}</td>
-                              <td>Mob: {{$member->mobile_no}}</td>
-                              <td></td>
+                              <td><b>Current Address:</b> <pre>{{$member->address}}</pre></td>
                             </tr>
                             <tr>
-                              <td>PF: {{$member->pf_no}}</td>
-                              <td></td>
-                              <td>DOB: {{date('d-M-y',strtotime($member->dob))}}</td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td>DOA: {{date('d-M-y',strtotime($member->doa))}}</td>
-                              <td>DOR: {{date('d-M-y',strtotime($member->dor))}}</td>
-                            </tr>
-                            <tr>
-                              <td>Current Address: {{$member->address}}</td>
-                            </tr>
-                            <tr>
-                              <td>Permanent Address: {{$member->permanent_address}}</td>
+                              <td><b>Permanent Address:</b> <pre>{{$member->permanent_address}}</pre></td>
                             </tr>
                           </tbody>
                         </table>
@@ -72,7 +82,7 @@
                         <table class="table">
                           <tbody>
                             <tr>
-                              <td>{{$member->salutation . ' ' . $member->nominee_name}}</td>
+                              <td>{{$member->nominee_salutation . ' ' . $member->nominee_name}}</td>
                               <td>{{$member->relationship}}</td>
                               <td></td>
                             </tr>
@@ -82,7 +92,7 @@
                               <td></td>
                             </tr>
                             <tr>
-                              <td>{{$member->nominee_address}}</td>
+                              <td><pre>{{$member->nominee_address}}</pre></td>
                             </tr>
 
                           </tbody>
@@ -91,7 +101,39 @@
                     </div>
   
                     </div>
-
+                    <hr>
+                    <h2>Bank Details</h2>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Member</th>
+                          <th>Nominee</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Account Number</td>
+                          <td>{{ $member->acc_no }}</td>
+                          <td>{{ $member->nominee_acc_no }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Name</td>
+                            <td>{{ $member->bank_name }}</td>
+                            <td>{{ $member->nominee_bank_name }}</td>
+                         </tr>
+                        <tr>
+                          <td>Branch Name</td>
+                          <td>{{ $member->branch_name }}</td>
+                          <td>{{ $member->nominee_branch_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>IFSC Code</td>
+                            <td>{{ $member->ifsc_code }}</td>
+                            <td>{{ $member->nominee_ifsc_code }}</td>
+                          </tr>
+                      </tbody>
+                    </table>
                     @if(count($member->documents) > 0)
                     <hr>
                     <h2>Documents</h2>
