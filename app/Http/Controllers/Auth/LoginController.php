@@ -65,7 +65,7 @@ class LoginController extends Controller
         //dd($request);
         $this->validate($request, [
             $this->username() => 'required|string',
-            'phone_no' => 'nullable|digits:10',
+            'phone_no' => 'required|digits:10',
             'password' => 'nullable|string',
         ]);
     }

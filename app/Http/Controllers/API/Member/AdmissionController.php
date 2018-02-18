@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\API\Member;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,9 +10,6 @@ use App\Rules\document;
 
 class AdmissionController extends Controller
 {   
-    public function SignUpForm() {
-        return view('Member.SignUp');
-    }
     public function UpdateForm() {
         
     }
@@ -21,7 +18,7 @@ class AdmissionController extends Controller
         $membership_code = null;
         if(count($members) > 0)
         $membership_code = $this->assign_membership_code($members[0]->applied_on);
-        return view('Member.Pending', ['members' => $members, 'membership_code' => $membership_code]);
+        return response()->json(['members' => $members, 'membership_code' => $membership_code]);
     }
     public function SignUp(Request $request) {
         $request->validate([
@@ -48,7 +45,7 @@ class AdmissionController extends Controller
             "railway_id" => 'required|min:2|max:45',
             "introduce_no" => 'nullable|exists:users,membership_code',
             "pf_no" => 'required|min:5|max:40',
-            "blood_group" => 'required|max:3',   //+ not adding
+            "blood_group" => 'required|max:3',
             "nominee_salutation" => "required|string|max:5",
             "nominee_name" => 'required|string|min:5|max:100',
             "relationship" => 'required|string|min:3|max:30',
@@ -137,7 +134,10 @@ class AdmissionController extends Controller
         }
         Documents::insert($documents);
         }
-        return redirect('home')->with('status',"Member Details sent for Approval Successfully.");
+        return response()->json([
+            "success" => 1,
+            "message" => "Member Details sent for Approval Successfully."
+        ]);
     }
     public function Update() {
 
@@ -156,7 +156,10 @@ class AdmissionController extends Controller
         ]);
         $member = User::find($request->id);
         if(is_null($member->adm_incharge) || is_null($member->cashier) || is_null($member->vice_president)) {
-            return redirect()->back()->with('error', 'Not Approved By ADM. Incharge / Cashier / Vice President Yet');
+            return response()->json([
+                "success" => "0",
+                "message" => "Not Approved By ADM. Incharge / Cashier / Vice President Yet"
+            ]);
         }
         $membership_code = null;
         $membership = 0;
@@ -168,12 +171,15 @@ class AdmissionController extends Controller
         $member->membership_code = $membership_code;
         $member->membership_status = $request->status;
         $member->save();
-        return redirect()->back()->with('message', 'Success! Application Processed Successfully.');
+        return response()->json([
+            "success" => "1",
+            "message" => "Success! Application Processed Successfully."
+        ]);
     }
     public function addSignature(Request $request) {
         $request->validate([
             'id' => 'required|exists:users',
-            'signature' => 'required|image|max:2000',
+            'signature' => 'required|image|max:20000',
             'sign_of' => 'required|in:adm_incharge,cashier,vice_president',
         ]);
         $member = User::find($request->id);
@@ -205,9 +211,15 @@ class AdmissionController extends Controller
         }
         if(!$error) {
         $member->save();
-        return redirect()->back()->with('message', 'Operation Completed Successfully.');
+        return response()->json([
+            "success" => 1,
+            "message" => 'Operation Completed Successfully.'
+        ]);
         }
-        return redirect()->back()->with('error', $error);
+        return response()->json([
+            "success" => 0,
+            "message" => $error
+        ]);
     }
     private function assign_membership_code($date) {
         $code = '';
