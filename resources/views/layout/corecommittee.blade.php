@@ -10,7 +10,7 @@
         <h6 class="nav-header">General</h6>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="index.php">
+        <a class="nav-link" href="index.php">
             <i class="batch-icon batch-icon-browser-alt"></i>
             Dashboard 
         </a>
@@ -47,7 +47,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="office-bearers.php">
+            <a class="nav-link{{(request()->route()->getName() == 'ShowOfficeBearer') ? ' active' : ''}}" href="{{ route('ShowOfficeBearer') }}">
             <i class="batch-icon batch-icon-compose-alt-2"></i>
             Office Bearers
         </a>

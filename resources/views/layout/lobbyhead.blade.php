@@ -42,7 +42,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="office-bearers.php">
+                <a class="nav-link{{(request()->route()->getName() == 'ShowOfficeBearer') ? ' active' : ''}}" href="{{ route('ShowOfficeBearer') }}">
                 <i class="batch-icon batch-icon-compose-alt-2"></i>
                 Office Bearers
             </a>
