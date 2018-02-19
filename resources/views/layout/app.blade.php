@@ -30,7 +30,19 @@
 <body>
 <div id="app" class="container-fluid">
 <div class="row">
-@include('layout.links')
+	@if(session('mode'))
+		@if(session('mode') == "member")
+		@include('layout.member')
+		@elseif(session('mode') == "president")
+		@include('layout.president')
+		@elseif(session('mode') == "lobbyhead")
+		@include('layout.lobbyhead')
+		@elseif(session('mode') == "corecommittee")
+		@include('layout.corecommittee')
+		@endif
+	@else
+	@include('layout.member')
+	@endif
 <div class="right-column">
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
 <button class="hamburger hamburger--slider" type="button" data-target=".sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle Sidebar">
@@ -44,12 +56,26 @@
 	<li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" id="navbar-dropdown-menu-link" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 			<i class="batch-icon batch-icon-book-alt-"></i>
-			English
+			@if(session('mode'))
+			@if(session('mode') == "member")
+			Member
+			@elseif(session('mode') == "president")
+			President
+			@elseif(session('mode') == "lobbyhead")
+			Lobby Head
+			@elseif(session('mode') == "corecommittee")
+			Core Committee
+			@endif
+		@else
+		Member
+		@endif
 		</a>
 		<ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu-link">
-			<li><a class="dropdown-item" href="#">Français</a></li>
-			<li><a class="dropdown-item" href="#">Deutsche</a></li>
-			<li><a class="dropdown-item" href="#">Español</a></li>
+			<li><a class="dropdown-item" href="{{ route('SwitchMode', 'member') }}">Member</a></li>
+			<li><a class="dropdown-item" href="{{ route('SwitchMode', 'lobbyhead') }}">Lobby Head</a></li>
+			<li><a class="dropdown-item" href="{{ route('SwitchMode', 'corecommittee') }}">Core Committee</a></li>
+			<li><a class="dropdown-item" href="{{ route('SwitchMode', 'president') }}">President</a></li>
+
 		</ul>
 	</li>
 </ul>
