@@ -10,6 +10,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/admission/application_status', 'Member\AdmissionController@ApplicationStatus')->name('ApplicationStatus');
     Route::post('/signature_upload', 'Member\AdmissionController@addSignature')->name('SignatureUpload');
     Route::get('/office_bearer', 'Administration\OfficeBearerController@index')->name('ShowOfficeBearer');
+    Route::post('/office_bearer', 'Administration\OfficeBearerController@update')->name('UpdateOfficeBearer');
 
 });
 

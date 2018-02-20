@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->char('password', 60)->nullable();
             $table->char('remember_token', 60)->nullable();
             $table->char('api_token', 60)->nullable();
-            $table->unsignedInteger('position_id')->default(3);
+            $table->unsignedInteger('position_id')->default(0);
             $table->enum('salutation', ['Mr.','Ms.','Mrs.'])->nullable();
             $table->string('name', 100);
             $table->string('father_husband_name', 100)->nullable();
