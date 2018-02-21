@@ -18,4 +18,7 @@ class User extends Authenticatable
     public function introduced_by() {
         return $this->hasOne('App\Models\User', 'id', 'introduce_no');
     }
+    public function position() {
+        return $this->hasOne('App\Models\OfficeBearer', 'id', 'position_id');
+    }
 }

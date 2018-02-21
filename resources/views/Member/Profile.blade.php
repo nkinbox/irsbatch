@@ -19,14 +19,16 @@
                       <div class="col-md-4">
                         <img src="{{ asset('photograph/' . $member->photograph) }}" style="width:100px">
                         <br>
-                        @if($member->membership)
+                        @if(!$member->membership)
                         <div><code>Membership INACTIVE</code></div>
                         @else
-                        <div>{{$member->membership_code}}</div>
-                        <!--div>
-                            //$member->position_id
-                          //$member->introduced_by->name
-                        </div-->
+                        <h5>{{ $member->position->position }}</h5>
+                        <h6>{{$member->membership_code}}</h6>
+                        @if($member->introduced_by)
+                        <div><br>                         
+                          Introduced By: {{$member->introduced_by->name}}
+                        </div>
+                        @endif
                         @endif
                       </div>
                       <div class="col-md-8">
@@ -72,6 +74,12 @@
                         </table>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-md-10"></div>
+                      <div class="col-md-2">
+                      <a href="{{ route('ProfileEditForm') }}" class="btn btn-primary">Edit</a>
+                      </div>
+                    </div>
                     <hr>
                     <h2>Nominee Details</h2>
                     <div>
@@ -99,7 +107,11 @@
                         </table>
                       </div>
                     </div>
-  
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                          <a href="" class="btn btn-primary">Edit</a>
+                        </div>
                     </div>
                     <hr>
                     <h2>Bank Details</h2>
@@ -132,6 +144,11 @@
                             <td>{{ $member->ifsc_code }}</td>
                             <td>{{ $member->nominee_ifsc_code }}</td>
                           </tr>
+                          <tr>
+                            <td></td>
+                            <td><a href="" class="btn btn-primary">Edit</a></td>
+                            <td><a href="" class="btn btn-primary">Edit</a></td>
+                          </tr>
                       </tbody>
                     </table>
                     @if(count($member->documents) > 0)
@@ -159,7 +176,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </main>
 @endsection

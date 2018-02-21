@@ -13,9 +13,6 @@ class AdmissionController extends Controller
     public function SignUpForm() {
         return view('Member.SignUp');
     }
-    public function UpdateForm() {
-        
-    }
     public function Pending() {
         $members = User::where('membership_status', 'pending')->get();
         $membership_code = null;
@@ -138,9 +135,6 @@ class AdmissionController extends Controller
         Documents::insert($documents);
         }
         return redirect('home')->with('status',"Member Details sent for Approval Successfully.");
-    }
-    public function Update() {
-
     }
     public function ShowApplication($id) {
         $member = User::where('id', $id)->with('documents')->first();

@@ -11,6 +11,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/signature_upload', 'Member\AdmissionController@addSignature')->name('SignatureUpload');
     Route::get('/office_bearer', 'Administration\OfficeBearerController@index')->name('ShowOfficeBearer');
     Route::post('/office_bearer', 'Administration\OfficeBearerController@update')->name('UpdateOfficeBearer');
+    Route::get('/member/{id}', 'Member\MemberDetails@view')->name('ViewMember');
+    Route::get('/profile', 'Member\MemberDetails@profile')->name('profile');
+    Route::get('/edit/profile', 'Member\MemberDetails@profileEditForm')->name('ProfileEditForm');
+    Route::post('/edit/profile', 'Member\MemberDetails@profileEdit')->name('ProfileEdit');
 
 });
 

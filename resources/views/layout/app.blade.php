@@ -221,7 +221,7 @@
 			</div>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-			<li><a class="dropdown-item" href="">Profile</a></li>
+		<li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
 			<li>
 				<a class="dropdown-item" href="mail-inbox.html">
 					Messages

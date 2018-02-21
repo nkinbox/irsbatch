@@ -37,13 +37,15 @@ class LoginController extends Controller
                  ));
             } elseif(Hash::check($request->password, $user->getAuthPassword())) {
                 //$token = bcrypt($request->membership_code . time());
+                $position = $user->position->position;
                 $token = "token";
                 $user->api_token = $token;
                 $user->save();
                 return response()->json(array(
                 "success" => "1",
                 "message"=>"loggedin",
-                "api_token" => $token
+                "api_token" => $token,
+                "position" => $position
                 ));
             } else {
                 return response()->json(array("success"=>"0","message"=>"Invalid Credentials"));

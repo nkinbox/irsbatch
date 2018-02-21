@@ -92,14 +92,46 @@ class LoginController extends Controller
     }
     protected function sendFailedLoginResponse(Request $request)
     {
-        //dd(trans('auth.failed'));
-        if($this->otp)
-        $message = "OTP Sent on " .substr($request->phone_no, 0, 2). "xxxxxx" .substr($request->phone_no, -2, 2). ".";
-        else
-        $message = trans('auth.failed');
-        throw ValidationException::withMessages([
-            $this->username() => [$message],
-        ]);
+        if($this->otp) {
+            $message = [
+                $this->username() => ["OTP Sent on " .substr($request->phone_no, 0, 2). "xxxxxx" .substr($request->phone_no, -2, 2). "."],
+                "otp" => true
+            ];
+        } else{
+            $message = [
+                $this->username() => [trans('auth.failed')],
+            ];
+        }
+        
+        throw ValidationException::withMessages($message);
+    }
+    protected function authenticated(Request $request, $user)
+    {   switch($request->mode) {
+            case "member":
+            $mode = "member";
+            break;
+            case "lobbyhead":
+            if($user->position_id == 1 || $user->position_id == 11)
+            $mode = "lobbyhead";
+            else
+            $mode = "member";
+            break;
+            case "corecommittee":
+            if($user->position_id > 0 && $user->position_id < 11)
+            $mode = "corecommittee";
+            else
+            $mode = "member";
+            break;
+            case "president":
+            if($user->position_id == 1)
+            $mode = "president";
+            else
+            $mode = "member";
+            break;
+            default:
+            $mode = "member";
+        }
+        session(["mode" => $mode]);
     }
     public function logout(Request $request)
     {

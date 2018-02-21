@@ -38,7 +38,7 @@
 								</span>
 								@endif
                             </div>
-
+							<div{!! $errors->has('otp') ? '' : ' style="display: none"' !!}>
 							<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
 								<label for="password">Enter OTP</label>
                                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
@@ -47,6 +47,16 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+							</div>
+							<div class="form-group">
+								<label for="mode">Select Mode</label>
+                                <select class="form-control" id="mode" name="mode">
+									<option value="member"{{ (old('mode') == "member") ? ' selected' : '' }}>MEMBER</option>
+									<option value="lobbyhead"{{ (old('mode') == "lobbyhead") ? ' selected' : '' }}>LOBBY HEAD</option>
+									<option value="corecommittee"{{ (old('mode') == "corecommittee") ? ' selected' : '' }}>CORE COMMITTEE</option>
+									<option value="president"{{ (old('mode') == "president") ? ' selected' : '' }}>PRESIDENT</option>
+								</select>
+							</div>
 							</div>
 							<!--div class="form-check">
 								<label class="custom-control custom-checkbox">
@@ -57,7 +67,7 @@
                             </div-->
 							<button type="submit" class="btn btn-primary btn-block">
 								<i class="batch-icon batch-icon-key"></i>
-								Log in
+								{{$errors->has('otp') ? 'Log In' : 'Send OTP'}}
 							</button>
 							<hr>
 							<!--p class="text-center">
