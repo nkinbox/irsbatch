@@ -183,14 +183,14 @@
                     <div class="form-group">
                         <label for="bloodgroup" class="active">Blood Group</label>
                         <select id="bloodgroup" name="blood_group" class="form-control">
-                            <option{{ (old('blood_group') == "A+") ? ' selected' : '' }}>A+</option>
-                            <option{{ (old('blood_group') == "A-") ? ' selected' : '' }}>A-</option>
-                            <option{{ (old('blood_group') == "B+") ? ' selected' : '' }}>B+</option>
-                            <option{{ (old('blood_group') == "B-") ? ' selected' : '' }}>B-</option>
-                            <option{{ (old('blood_group') == "O+") ? ' selected' : '' }}>O+</option>
-                            <option{{ (old('blood_group') == "O-") ? ' selected' : '' }}>O-</option>
-                            <option{{ (old('blood_group') == "AB+") ? ' selected' : '' }}>AB+</option>
-                            <option{{ (old('blood_group') == "AB-") ? ' selected' : '' }}>AB-</option>
+                            <option value="0"{{ (old('blood_group') == "0") ? ' selected' : '' }}>A+</option>
+                            <option value="1"{{ (old('blood_group') == "1") ? ' selected' : '' }}>A-</option>
+                            <option value="2"{{ (old('blood_group') == "2") ? ' selected' : '' }}>B+</option>
+                            <option value="3"{{ (old('blood_group') == "3") ? ' selected' : '' }}>B-</option>
+                            <option value="4"{{ (old('blood_group') == "4") ? ' selected' : '' }}>O+</option>
+                            <option value="5"{{ (old('blood_group') == "5") ? ' selected' : '' }}>O-</option>
+                            <option value="6"{{ (old('blood_group') == "6") ? ' selected' : '' }}>AB+</option>
+                            <option value="7"{{ (old('blood_group') == "7") ? ' selected' : '' }}>AB-</option>
                         </select>
                     </div>
                 </div>

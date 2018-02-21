@@ -45,19 +45,11 @@
                 </div>
             </div>
             <br>
-            <p class="lead" style="font-weight: bold">
-            Upload Documents
-            </p>
-            <a href="#" class="btn btn-default" id="addNewDoc">Add New Document</a>
+            <a href="#" class="btn btn-default" id="addNewDoc">Upload Address Proof</a>
             <div class="row" id="docsContainer">
-                <div class="col-md-3" style="padding-top:2em">
-                <div class="form-group">
-                    <label class="active">Document Name</label>
-                    <input type="text"  class="form-control" name="docs_name[0]" placeholder="Document Name" value="">
-                    <input type="file"  class="form-control" name="docs[0][]" multiple>
-                </div>
-                </div>
+
             </div>
+            <br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

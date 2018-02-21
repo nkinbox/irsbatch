@@ -10,9 +10,6 @@ use App\Rules\document;
 
 class AdmissionController extends Controller
 {   
-    public function UpdateForm() {
-        
-    }
     public function Pending() {
         $members = User::where('membership_status', 'pending')->get();
         $membership_code = null;
@@ -45,7 +42,7 @@ class AdmissionController extends Controller
             "railway_id" => 'required|min:2|max:45',
             "introduce_no" => 'nullable|exists:users,membership_code',
             "pf_no" => 'required|min:5|max:40',
-            "blood_group" => 'required|max:3',
+            "blood_group" => 'required|numeric',
             "nominee_salutation" => "required|string|max:5",
             "nominee_name" => 'required|string|min:5|max:100',
             "relationship" => 'required|string|min:3|max:30',
@@ -81,6 +78,31 @@ class AdmissionController extends Controller
         $introduce_no = User::select('id')->where('membership_code', $request->introduce_no)->first();
         $introduce_no = $introduce_no->id;
         }
+        switch($request->blood_group) {
+            case 0:
+            $blood_group = "A+";
+            break;
+            case 1:
+            $blood_group = "A-";
+            break;
+            case 2:
+            $blood_group = "B+";
+            break;
+            case 3:
+            $blood_group = "B-";
+            break;
+            case 4:
+            $blood_group = "O+";
+            break;
+            case 5:
+            $blood_group = "O-";
+            break;
+            case 6:
+            $blood_group = "AB+";
+            break;
+            case 7:
+            $blood_group = "AB-";
+        }
         $user = new User;
         $user->salutation = $request->salutation;
         $user->name = $request->name;
@@ -105,7 +127,7 @@ class AdmissionController extends Controller
         $user->railway_id = $request->railway_id;
         $user->introduce_no = $introduce_no;
         $user->pf_no = $request->pf_no;
-        $user->blood_group = $request->blood_group;
+        $user->blood_group = $blood_group;
         $user->nominee_salutation = $request->nominee_salutation;
         $user->nominee_name = $request->nominee_name;
         $user->relationship = $request->relationship;
@@ -138,9 +160,6 @@ class AdmissionController extends Controller
             "success" => 1,
             "message" => "Member Details sent for Approval Successfully."
         ]);
-    }
-    public function Update() {
-
     }
     public function ShowApplication($id) {
         $member = User::where('id', $id)->with('documents')->first();

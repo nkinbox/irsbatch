@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Auth;
+use App\Models\Documents;
+use App\Rules\document;
 
 class MemberDetails extends Controller
 {
@@ -28,6 +30,13 @@ class MemberDetails extends Controller
         return view('Member.ProfileEdit');
     }
     public function profileEdit(Request $request) {
+        $request->validate([
+            "address" => 'nullable|min:5|max:200',
+            "mobile_no" => 'nullable|min:10|max:10',
+            "whatsapp_no" => 'nullable|min:10|max:10',
+            "docs_name.*" => 'sometimes|required_with:address|string|min:5|max:100',
+            "docs" => ['sometimes|required_with:address,null', new document],
+        ]);
         return $request;
     }
 }
