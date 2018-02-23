@@ -22,7 +22,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="member-detail.php">
+        <a class="nav-link" href="{{ route('MemberDetails') }}">
             <i class="batch-icon batch-icon-star"></i>
             Members Detail
         </a>

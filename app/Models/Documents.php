@@ -9,6 +9,6 @@ class Documents extends Model
     //protected $table = 'documents';
     public $timestamps = false;
     protected $fillable = [
-        'member_id', 'document_name', 'file_name'
+        'member_id', 'document_name', 'file_name', 'uploaded_on'
     ];
 }

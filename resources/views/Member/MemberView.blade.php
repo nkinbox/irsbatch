@@ -74,12 +74,6 @@
                         </table>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-10"></div>
-                      <div class="col-md-2">
-                      <a href="{{ route('ProfileEditForm') }}" class="btn btn-primary">Edit</a>
-                      </div>
-                    </div>
                     <hr>
                     <h2>Nominee Details</h2>
                     <div>
@@ -106,12 +100,6 @@
                           </tbody>
                         </table>
                       </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10"></div>
-                        <div class="col-md-2">
-                          <a href="{{ route('NomineeEditForm') }}" class="btn btn-primary">Edit</a>
-                        </div>
                     </div>
                     <hr>
                     <h2>Bank Details</h2>
@@ -143,11 +131,6 @@
                             <td>IFSC Code</td>
                             <td>{{ $member->ifsc_code }}</td>
                             <td>{{ $member->nominee_ifsc_code }}</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td><a href="{{ route('BankEditForm') }}" class="btn btn-primary">Edit</a></td>
-                            <td><a href="{{ route('NomineeBankEditForm') }}" class="btn btn-primary">Edit</a></td>
                           </tr>
                       </tbody>
                     </table>

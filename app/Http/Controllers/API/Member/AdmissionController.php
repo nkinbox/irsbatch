@@ -151,7 +151,7 @@ class AdmissionController extends Controller
                     'documents', $document
                 );
                 $docname = $request->docs_name[$key];
-                $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document);
+                $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document, "uploaded_on" => date("Y-m-d"));
             }
         }
         Documents::insert($documents);

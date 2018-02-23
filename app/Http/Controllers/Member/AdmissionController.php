@@ -9,7 +9,7 @@ use App\Models\Documents;
 use App\Rules\document;
 
 class AdmissionController extends Controller
-{   
+{
     public function SignUpForm() {
         return view('Member.SignUp');
     }
@@ -154,7 +154,7 @@ class AdmissionController extends Controller
                     'documents', $document
                 );
                 $docname = $request->docs_name[$key];
-                $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document);
+                $documents[] = array("member_id" => $user->id, "document_name" => $docname, "file_name" => $document, "uploaded_on" => date("Y-m-d"));
             }
         }
         Documents::insert($documents);
@@ -186,6 +186,7 @@ class AdmissionController extends Controller
         $member->membership = $membership;
         $member->membership_code = $membership_code;
         $member->membership_status = $request->status;
+        $member->approved_on = date('Y-m-d');
         $member->save();
         return redirect()->back()->with('message', 'Success! Application Processed Successfully.');
     }

@@ -114,9 +114,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="membership-detail.php">
+                <a class="nav-link" href="{{ route('MemberDetails') }}">
                     <i class="batch-icon batch-icon-star"></i>
-                    MemberShip-Detail
+                    Member Details
                 </a>
             </li>
             <li class="nav-item">

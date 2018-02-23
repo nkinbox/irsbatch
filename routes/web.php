@@ -15,7 +15,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', 'Member\MemberDetails@profile')->name('profile');
     Route::get('/edit/profile', 'Member\MemberDetails@profileEditForm')->name('ProfileEditForm');
     Route::post('/edit/profile', 'Member\MemberDetails@profileEdit')->name('ProfileEdit');
-
+    Route::get('/edit/nominee', 'Member\MemberDetails@nomineeEditForm')->name('NomineeEditForm');
+    Route::post('/edit/nominee', 'Member\MemberDetails@nomineeEdit')->name('NomineeEdit');
+    Route::get('/edit/bank', 'Member\MemberDetails@bankEditForm')->name('BankEditForm');
+    Route::post('/edit/bank', 'Member\MemberDetails@bankEdit')->name('BankEdit');
+    Route::get('/edit/nominee_bank', 'Member\MemberDetails@nomineeBankEditForm')->name('NomineeBankEditForm');
+    Route::post('/edit/nominee_bank', 'Member\MemberDetails@nomineeBankEdit')->name('NomineeBankEdit');
+    Route::get('/member_details', 'Member\MemberDetails@memberDetails')->name('MemberDetails');
+    Route::get('/member_details/view/{id}', 'Member\MemberDetails@View')->name('ViewMember');
+    Route::get('/member_details/edit/{id}', 'Member\MemberDetails@EditForm')->name('EditMemberForm');
+    Route::post('/member_details/edit', 'Member\MemberDetails@Edit')->name('EditMember');
 });
 
 
