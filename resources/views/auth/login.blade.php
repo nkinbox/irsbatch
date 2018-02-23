@@ -38,7 +38,7 @@
 								</span>
 								@endif
                             </div>
-							<div{!! $errors->has('otp') ? '' : ' style="display: none"' !!}>
+							@if($errors->has('otp'))
 							<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
 								<label for="password">Enter OTP</label>
                                 <input type="password" class="form-control" id="password" placeholder="Password" name="password">
@@ -57,7 +57,7 @@
 									<option value="president"{{ (old('mode') == "president") ? ' selected' : '' }}>PRESIDENT</option>
 								</select>
 							</div>
-							</div>
+							@endif
 							<!--div class="form-check">
 								<label class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input" name="remember" {{ old('remember') ? 'checked' : '' }}>
