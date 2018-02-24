@@ -31,7 +31,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="salutation" class="active">Salutation</label>
-                    <select id="salutation" name="salutation" class="form-control">
+                    <select id="salutation" name="salutation" class="form-control"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                         <option{{ (old('salutation', $member->salutation) == "Mr.") ? ' selected' : '' }}>Mr.</option>
                         <option{{ (old('salutation', $member->salutation) == "Ms.") ? ' selected' : '' }}>Ms.</option>
                         <option{{ (old('salutation', $member->salutation) == "Mrs.") ? ' selected' : '' }}>Mrs.</option>
@@ -41,13 +41,13 @@
             <div class="col-md-10">
                 <div class="form-group">
                     <label for="name" class="active">Full Name</label>
-                    <input id="name" class="form-control" type="text" name="name" placeholder="Full Name"  value="{{ old('name', $member->name) }}">
+                    <input id="name" class="form-control" type="text" name="name" placeholder="Full Name"  value="{{ old('name', $member->name) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                 </div>
             </div>
             </div>
             <div class="form-group">
                 <label for="fhname" class="active">Father / Husband Name</label>
-                <input id="fhname" type="text" class="form-control" name="father_husband_name" placeholder="Father or Husband name" value="{{ old('father_husband_name', $member->father_husband_name) }}">
+                <input id="fhname" type="text" class="form-control" name="father_husband_name" placeholder="Father or Husband name" value="{{ old('father_husband_name', $member->father_husband_name) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
             </div>
             <div class="row">
             <div class="col-md-6">
@@ -59,7 +59,7 @@
             <div class="col-md-6">
             <div class="form-group">
                 <label for="hq" class="active">HQ</label>
-                <input id="hq" type="text" class="form-control" name="hq" placeholder="hq" value="{{ old('hq', $member->hq) }}">
+                <input id="hq" type="text" class="form-control" name="hq" placeholder="hq" value="{{ old('hq', $member->hq) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
             </div>
             </div>
             </div>
@@ -73,26 +73,26 @@
             <div class="col-md-4">
             <div class="form-group">
                 <label for="dob" class="active">D.O.B</label>
-                <input id="dob" type="date" class="form-control" name="dob" placeholder="dob" value="{{ old('dob', $member->dob) }}">
+                <input id="dob" type="date" class="form-control" name="dob" placeholder="dob" value="{{ old('dob', $member->dob) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label for="doa" class="active">D.O.A</label>
-                <input id="doa" type="date" class="form-control" name="doa" placeholder="doa" value="{{ old('doa', $member->doa) }}">
+                <input id="doa" type="date" class="form-control" name="doa" placeholder="doa" value="{{ old('doa', $member->doa) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
             </div>
             </div>
             <div class="col-md-4">
             <div class="form-group">
                 <label for="dor" class="active">D.O.R</label>
-                <input id="dor" type="date" class="form-control" name="dor" placeholder="dor" value="{{ old('dor', $member->dor) }}">
+                <input id="dor" type="date" class="form-control" name="dor" placeholder="dor" value="{{ old('dor', $member->dor) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
             </div>
             </div>
             </div>
 
             <div class="form-group">
                 <label for="PAddress" class="active">Permanent Address</label>
-                <textarea rows="5" wrap="hard" id="PAddress" type="text" class="form-control" name="permanent_address" placeholder="permanent_address">{{ old('permanent_address', $member->permanent_address) }}</textarea>
+                <textarea rows="5" wrap="hard" id="PAddress" type="text" class="form-control" name="permanent_address" placeholder="permanent_address"{{(session('mode') == 'lobbyhead')?' readonly':''}}>{{ old('permanent_address', $member->permanent_address) }}</textarea>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -138,7 +138,7 @@
                 <div class="col-md-6">
                 <div class="form-group">
                 <label for="pan" class="active">PAN Card Number</label>
-                <input id="pan" type="text" class="form-control" name="pan_card" placeholder="pancard_no" value="{{ old('pan_card', $member->pan_card) }}">
+                <input id="pan" type="text" class="form-control" name="pan_card" placeholder="pancard_no" value="{{ old('pan_card', $member->pan_card) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                 </div>
                 </div>
             </div>
@@ -147,13 +147,13 @@
                 <div class="col-md-6">
                 <div class="form-group">
                 <label for="vid" class="active">Voter / Aadhar Id No</label>
-                <input id="vid" type="text" class="form-control" name="id_number" placeholder="ID Number" value="{{ old('id_number', $member->id_number) }}">
+                <input id="vid" type="text" class="form-control" name="id_number" placeholder="ID Number" value="{{ old('id_number', $member->id_number) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                 </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="rid" class="active">Railway Id No</label>
-                        <input id="rid" type="text" class="form-control" name="railway_id" placeholder="railway_id" value="{{ old('railway_id', $member->railway_id) }}">
+                        <input id="rid" type="text" class="form-control" name="railway_id" placeholder="railway_id" value="{{ old('railway_id', $member->railway_id) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 <div class="col-md-6">
                 <div class="form-group">
                 <label for="pfno" class="active">P.F. No</label>
-                <input id="pfno" type="text" class="form-control" name="pf_no" placeholder="pf_no" value="{{ old('pf_no', $member->pf_no) }}">
+                <input id="pfno" type="text" class="form-control" name="pf_no" placeholder="pf_no" value="{{ old('pf_no', $member->pf_no) }}"{{(session('mode') == 'lobbyhead')?' readonly':''}}>
                 </div>
                 </div>
                 <div class="col-md-6">

@@ -43,4 +43,17 @@ $(document).ready(function() {
         var i = $("#docsContainer").children().length;
         $("#docsContainer").append('<div class="col-md-3" style="padding-top:2em"><div class="form-group"><label class="active">Document Name</label><input type="text"  class="form-control" name="docs_name[' + i + ']" placeholder="Document Name" required><input type="file"  class="form-control" name="docs[' + i + '][]" multiple required></div></div>');
     });
+    var address = document.getElementById("Address");
+    var len_of_address=0;
+    if(address != undefined) {
+        len_of_address = address.value.length;
+        address.addEventListener('input', function() {
+            if (address.value.length != len_of_address) {
+                var i = $("#docsContainer").children().length;
+                if(i == 0) {
+                    $("#docsContainer").append('<div class="col-md-3" style="padding-top:2em"><div class="form-group"><label class="active">Document Name</label><input type="text"  class="form-control" name="docs_name[' + i + ']" placeholder="Document Name" value="Address Proof" required><input type="file"  class="form-control" name="docs[' + i + '][]" multiple required></div></div>');
+                }
+            }
+        });
+    }
   });
