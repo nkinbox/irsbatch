@@ -25,6 +25,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/member_details/view/{id}', 'Member\MemberDetails@View')->name('ViewMember');
     Route::get('/member_details/edit/{id}', 'Member\MemberDetails@EditForm')->name('EditMemberForm');
     Route::post('/member_details/edit', 'Member\MemberDetails@Edit')->name('EditMember');
+    Route::get('/upload_ecs', 'Administration\ECSController@uploadFilesForm')->name('UploadEcsForm');
+    Route::post('/upload_ecs', 'Administration\ECSController@uploadFiles')->name('UploadEcs');
+    Route::get('/process_ecs', 'Administration\ECSController@processECS')->name('Process_ECS');
+    Route::get('/process_ecs/view', 'Administration\ECSController@FinalizeECS')->name('Finalize_ECS');
+    Route::delete('/process_ecs', 'Administration\ECSController@processECS_delete')->name('Process_ECS_delete');
+    Route::put('/process_ecs', 'Administration\ECSController@processECS_put')->name('Process_ECS_put');
 });
 
 

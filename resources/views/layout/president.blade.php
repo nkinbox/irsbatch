@@ -29,7 +29,7 @@
             </li>
     
             <li class="nav-item">
-                <a class="nav-link" href="ecs-table.php">
+                <a class="nav-link" href="{{ route('UploadEcsForm') }}">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     ECS Form
                 </a>

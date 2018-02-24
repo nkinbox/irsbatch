@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EcsBankData extends Model
 {
-    //
+    protected $table = "ecs_bank_data";
+    public $timestamps = false;
 }
