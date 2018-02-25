@@ -34,7 +34,7 @@ class ECSController extends Controller
         return $doc_name;
     }
     public function uploadFilesForm() {
-        return view('Administration.ECSUpload');
+        return view('ECS.ECSUpload');
     }
     public function uploadFiles(Request $request) {
         $id = EcsBankData::where(['ecs_month' => date('m'), 'ecs_year' => date('Y')])->first();
@@ -111,14 +111,6 @@ class ECSController extends Controller
         foreach($json as $temp) {
             foreach($temp as $row) {
                 $result[$i] = array_column($row, "text");
-                /*$increment = true;
-                if($result[$i][0])) {
-                foreach($result[$i] as $key => $value) {                    
-                        $result[$i-1][$key] .= " " .$value;
-                }
-                $increment = false;
-                }
-                if($increment)*/
                 if(intval($result[$i][0]) == 0)
                 $result[$i][0] = $result[$i-1][0];
                 elseif($i>0) {
@@ -126,13 +118,10 @@ class ECSController extends Controller
                     if($diff != 1)
                     $error[] = $diff . " Rows missing before SNo: " .$result[$i][0];
                 }
-                //
-                //if($diff == intval($result[$i-1][0]))
-                //echo intval("");
                 $i++;
             }
         }}
-        return view('Administration.ECSFileVerify')->with('result', array($result, $error));
+        return view('ECS.ECSFileVerify')->with('result', array($result, $error));
     }
     public function processECS_delete() {
         $ecsData = EcsBankData::where([
@@ -303,7 +292,7 @@ class ECSController extends Controller
                         "Start_Date" => $row[$pointers['transaction']['Start_Date']],
                         "End_Date" => $row[$pointers['transaction']['End_Date']],
                         "Frequency" => $row[$pointers['transaction']['Frequency']],
-                        "status" => $status,
+                        "Status" => $status,
                         "surety" => $trust
                     );
                     $i++;
@@ -315,6 +304,6 @@ class ECSController extends Controller
         //dd($all);
             
 
-        return view('Administration.ECSFileVerify')->with('result', array($all, array()));
+        return view('ECS.ECSConfirm')->with('result', $all);
     }
 }
