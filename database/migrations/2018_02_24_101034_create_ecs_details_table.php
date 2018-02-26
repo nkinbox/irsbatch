@@ -20,15 +20,15 @@ class CreateEcsDetailsTable extends Migration
             $table->string('BankCode', 20)->nullable();
             $table->string('Beneficiary_AccNo', 40);
             $table->string('Beneficiary_Name', 100);
-            $table->date('Settlement_Date')->nullable();
+            $table->string('Settlement_Date', 12)->nullable();
             $table->unsignedDecimal('Amount', 10, 2)->nullable();
-            $table->date('Start_Date')->nullable();
-            $table->date('End_Date')->nullable();
+            $table->string('Start_Date', 12)->nullable();
+            $table->string('End_Date', 12)->nullable();
             $table->string('Frequency', 15)->nullable();
             $table->unsignedInteger('member_id')->nullable();
             $table->enum('status', ['Successful', 'Rejected', 'Returned'])->nullable();
             $table->unsignedInteger('original_file_id');
-            $table->enum('existance', ['tracked', 'untracked']);
+            $table->enum('existance', ['tracked', 'untracked', 'ignore'])->default('untracked');
         });
     }
 

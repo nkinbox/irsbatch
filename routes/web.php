@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/process_ecs/view', 'Administration\ECSController@FinalizeECS')->name('Finalize_ECS');
     Route::delete('/process_ecs', 'Administration\ECSController@processECS_delete')->name('Process_ECS_delete');
     Route::put('/process_ecs', 'Administration\ECSController@processECS_put')->name('Process_ECS_put');
+    Route::put('/insert_ecs', 'Administration\ECSController@InsertECS')->name('InsertECSFile');
+    Route::get('/ecs_tracking', 'Administration\ECSController@ECSTrackingView')->name('ECSTracking');
 });
 
 

@@ -40,7 +40,7 @@
     @if(session('message'))
     <div class="errors">{{session('message')}}</div>
     @endif
-    <form action="{{route('Process_ECS_put')}}" method="post">
+    <form action="{{route('Process_ECS_put')}}" method="post" onsubmit="return confirm('Have You Marked the pointers?');">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="PUT">
         <button type="submit" id="btn">Proceed</button>
@@ -54,7 +54,7 @@
             <thead>
             <tr><?php
                 $fields = array('SNO', 'UMRN', 'BankCode', 'Beneficiary_AccNo', 'Beneficiary_Name', 'Settlement_Date', 'Amount', 'Start_Date', 'End_Date','Frequency');
-                if(count($result[0][0]) == count($fields)) { ?>
+                if((count($result[0][0]) == count($fields)) && session('step') == 1) { ?>
                 @for($i = 0; $i < count($result[0][0]); $i++)
                 <th>
                     <select name="fields[{{$i}}]">
@@ -91,7 +91,7 @@
         This File Was Not Uploaded
         @endif
     </form>
-<form action="{{route('Process_ECS_delete')}}" method="post" style="padding-top:20px">
+<form action="{{route('Process_ECS_delete')}}" method="post" style="padding-top:20px" onsubmit="return confirm('Do you really want to ReUpload Files?');">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="DELETE">
     <button type="submit" id="btn">Click To Upload Files Again</button>

@@ -48,7 +48,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('MemberDetails') }}">
+            <a class="nav-link{{(request()->route()->getName() == 'MemberDetails') ? ' active' : ''}}" href="{{ route('MemberDetails') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Members Details
             </a>

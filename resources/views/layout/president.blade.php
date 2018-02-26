@@ -29,9 +29,21 @@
             </li>
     
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('UploadEcsForm') }}">
+                <a class="nav-link{{(request()->route()->getName() == 'UploadEcsForm') ? ' active' : ''}}" href="{{ route('UploadEcsForm') }}">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     ECS Form
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link{{(request()->route()->getName() == 'ECSTracking') ? ' active' : ''}}" href="{{ route('ECSTracking') }}">
+                    <i class="batch-icon batch-icon-compose-alt-2"></i>
+                    ECS Tracking
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="batch-icon batch-icon-compose-alt-2"></i>
+                    ECS Details Member Wise
                 </a>
             </li>
             <li class="nav-item">
@@ -114,7 +126,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('MemberDetails') }}">
+                <a class="nav-link{{(request()->route()->getName() == 'MemberDetails') ? ' active' : ''}}" href="{{ route('MemberDetails') }}">
                     <i class="batch-icon batch-icon-star"></i>
                     Member Details
                 </a>
