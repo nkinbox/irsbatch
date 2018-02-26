@@ -221,12 +221,6 @@ class ECSController extends Controller
         return redirect()->back();
     }
     public function processECS() {
-        if(session('step'))
-        $step = session('step');
-        else {
-            $step = 1;
-            session(['step' => 1]);
-        }
         $ecsData = EcsBankData::where([
             'ecs_month' => date('m'),
             'ecs_year' => date('Y'),
@@ -234,6 +228,12 @@ class ECSController extends Controller
             ])->first();
         if($ecsData == null) {
             return redirect()->back();
+        }
+        if(session('step'))
+        $step = session('step');
+        else {
+            $step = 1;
+            session(['step' => 1]);
         }
         $json = null;
         switch($step) {
@@ -345,13 +345,14 @@ class ECSController extends Controller
         return redirect()->route('ECSTracking');
     }
     public function ECSTrackingView() {
-        $ecs = EcsDetails::where(['member_id' => '0', 'existance' => 'untracked'])->get();
+        $ecs = EcsDetails::where(['member_id' => '0', 'existance' => 'untracked'])->with('pdf')->get();
         $bool = true;
         if($ecs->isEmpty()) {
             unset($ecs);
-            $ecs = EcsDetails::where(['existance' => 'untracked'])->get();
+            $ecs = EcsDetails::where(['existance' => 'untracked'])->with('pdf')->get();
             $bool = false;
         }
+        //return $ecs;
         return view('ECS.ECSTracking')->with('ecs_list', array($bool, $ecs));
     }
 }

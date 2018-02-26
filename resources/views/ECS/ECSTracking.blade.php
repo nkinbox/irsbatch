@@ -12,7 +12,39 @@
 </div-->
 <div class="col-lg-12 pb-5">
     <h2>ECS Tracking</h2>
-    
+    @if($ecs_list[0])
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>SNO<br>(in PDF)</th>
+                <th>UMRN</th>
+                <th>BankCode</th>
+                <th>Beneficiary AccNo</th>
+                <th>Beneficiary Name</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Files</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($ecs_list[1] as $ecs)
+            <tr>
+            <td>{{$ecs->SNO}}</td>
+            <td>{{$ecs->UMRN}}</td>
+            <td>{{$ecs->BankCode}}</td>
+            <td>{{$ecs->Beneficiary_AccNo}}</td>
+            <td>{{$ecs->Beneficiary_Name}}</td>
+            <td>{{$ecs->Amount}}</td>
+            <td>{{$ecs->status}}</td>
+            <td><a href="{{ asset('ecs/'.$ecs->pdf->transactions) }}" target="_blank">View PDF</a></td>
+            </tr>
+            @endforeach
+        </tbody>
+
+
+    @else
+
+    @endif
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -33,12 +65,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php $i = 0;
-            foreach($ecs_list[1] as $ecs) {
-                echo "1";
-            }
-            ?>
-
+            @foreach($ecs_list[1] as $ecs)
+            Hello
+            @endforeach
         </tbody>
     </table>
 </div>	

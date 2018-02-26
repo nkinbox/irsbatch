@@ -23,4 +23,10 @@ class EcsDetails extends Model
         "status", 
         "original_file_id", 
     ];
+    public function member_detail() {
+        return $this->hasOne('App\Models\User', 'id', 'member_id');
+    }
+    public function pdf() {
+        return $this->hasOne('App\Models\EcsBankData', 'id', 'original_file_id')->select('id', 'transactions', 'returned', 'rejected');
+    }
 }
