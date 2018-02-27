@@ -480,4 +480,11 @@ class ECSController extends Controller
         ]);
         return "Loan Repayment Logic Comes Here!";
     }
+    public function ECSByMonth() {
+        $ecs = EcsBankData::orderBy('id', 'desc')->get();
+        return view('ECS.ECSByMonth')->with('ecs', $ecs);
+    }
+    public function ECSByMember() {
+        return view('ECS.ECSByMember');
+    }
 }

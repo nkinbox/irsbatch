@@ -41,13 +41,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link{{(request()->route()->getName() == 'ECSByMember') ? ' active' : ''}}" href="{{ route('ECSByMember') }}">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     ECS Details Member Wise
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="ecs-details.php">
+                <a class="nav-link{{(request()->route()->getName() == 'ECSByMonth') ? ' active' : ''}}" href="{{ route('ECSByMonth') }}">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     ECS Details Month Wise
                 </a>

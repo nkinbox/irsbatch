@@ -83,18 +83,17 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="ecs-table.php">
-            <i class="batch-icon batch-icon-star"></i>
-            ECS Details Member wise
+        <a class="nav-link{{(request()->route()->getName() == 'ECSByMember') ? ' active' : ''}}" href="{{ route('ECSByMember') }}">
+            <i class="batch-icon batch-icon-compose-alt-2"></i>
+            ECS Details Member Wise
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="ecs-details.php">
-            <i class="batch-icon batch-icon-star"></i>
-            ECS Details Month wise
+        <a class="nav-link{{(request()->route()->getName() == 'ECSByMonth') ? ' active' : ''}}" href="{{ route('ECSByMonth') }}">
+            <i class="batch-icon batch-icon-compose-alt-2"></i>
+            ECS Details Month Wise
         </a>
     </li>
-
     <li class="nav-item">
         <a class="nav-link" href="i-card-table.php">
             <i class="batch-icon batch-icon-star"></i>
