@@ -33,6 +33,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/process_ecs', 'Administration\ECSController@processECS_put')->name('Process_ECS_put');
     Route::put('/insert_ecs', 'Administration\ECSController@InsertECS')->name('InsertECSFile');
     Route::get('/ecs_tracking', 'Administration\ECSController@ECSTrackingView')->name('ECSTracking');
+    Route::get('/ecs_tracking/{id}/{membership_code?}', 'Administration\ECSController@ECS2MemberForm')->name('ECS2MemberForm');
+    Route::post('/ecs_tracking', 'Administration\ECSController@ECS2Member')->name('ECS2Member');
+    Route::post('/ecs_ignore', 'Administration\ECSController@IgnoreECS')->name('IgnoreECS');
+    Route::post('/ecs_membership_fees', 'Administration\ECSController@membership_fees')->name('MarkAsMembershipFees');
+    Route::post('/ecs_loan_repayment', 'Administration\ECSController@loan_repayment')->name('MarkAsLoanRepayment');
 });
 
 

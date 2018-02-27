@@ -29,7 +29,12 @@ $(document).ready(function() {
             reader.readAsDataURL(input.files[0]);
         }
     });
-  
+    $('#sa_checkbox').change(function() {
+        var checkboxes = $('[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+        }
+    });
     $(".upload-button").on('click', function() {
        $(".file-upload").click();
   

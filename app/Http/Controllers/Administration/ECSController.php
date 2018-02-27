@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\EcsBankData;
 use App\Models\EcsDetails;
+use App\Models\MembershipFees;
+use App\Models\User;
 use Auth;
 use DB;
 use Storage;
@@ -349,10 +351,133 @@ class ECSController extends Controller
         $bool = true;
         if($ecs->isEmpty()) {
             unset($ecs);
-            $ecs = EcsDetails::where(['existance' => 'untracked'])->with('pdf')->get();
+            $ecs = EcsDetails::where(['existance' => 'untracked'])->with('pdf', 'member_detail')->get();
             $bool = false;
         }
-        //return $ecs;
         return view('ECS.ECSTracking')->with('ecs_list', array($bool, $ecs));
+    }
+    public function ECS2MemberForm($id, $membership_code = null) {
+        $ecs = EcsDetails::find($id);
+        if($ecs == null)
+        return redirect()->back();
+        $member = null;
+        if($membership_code != null)
+        $member = User::where('membership_code', $membership_code)->first();
+        return view('ECS.ECS2Member', ['ecs' => $ecs, 'member' => $member]);
+    }
+    public function ECS2Member(Request $request) {
+        $request->validate([
+            "id" => "required|exists:ecs_details",
+            "membership_code" => "required|exists:users",
+            "allot" => "required|boolean"
+        ]);
+        if($request->allot == "0")
+        return redirect()->route('ECS2MemberForm', ['id' => $request->id, 'membership_code' => $request->membership_code]);
+        if($request->allot == "1"){
+            $member_id = User::select('id')->where('membership_code', $request->membership_code)->first();
+            $ecs = EcsDetails::find($request->id);
+            $ecs->member_id = $member_id->id;
+            $ecs->save();
+        }
+        return redirect()->route('ECSTracking');
+    }
+    public function IgnoreECS(Request $request) {
+        //dd($request->all());
+        $request->validate([
+            "ecs_id" => "required|array",
+            "algo" => "required|in:ecsid,logic"
+        ]);
+        EcsDetails::whereIn('id', $request->ecs_id)->update(['existance' => 'ignore']);
+        return redirect()->back();
+    }
+    public function membership_fees(Request $request) {
+        $request->validate([
+            "algo" => "required|in:ecsid,logic",
+            "ecs_id" => "required_if:algo,ecsid|array",
+            "operator" => "required_if:alog,logic|numeric|min:0|max:4",
+            "amount" => "required_if:alog,logic|numeric"
+        ]);
+        if($request->algo == "logic") {
+            $operator = "=";
+            switch($request->operator) {
+                case "0":
+                $operator = "=";
+                break;
+                case "1":
+                $operator = "<=";
+                break;
+                case "2":
+                $operator = "<";
+                break;
+                case "3":
+                $operator = ">=";
+                break;
+                case "4":
+                $operator = ">";
+                break;
+            }
+            $ecs_ = EcsDetails::select('id', 'Amount', 'member_id', 'status')
+            ->where('existance', 'untracked')
+            ->where('Amount', $operator, $request->amount)->get();
+            if(!$ecs_->isEmpty()) {
+                $mf = array();
+                $ecs_id = array();
+                foreach($ecs_ as $ecs) {
+                    $ecs_id[] = $ecs->id;
+                    if($ecs->status == "Successful")
+                    $status = "success";
+                    else
+                    $status = "pending";
+                    $mf[] = array(
+                        "member_id" => $ecs->member_id,
+                        "status" => $status,
+                        "fees_amount" => $ecs->Amount,
+                        "paid_amount" => $ecs->Amount,
+                        "fees_month" => date('m'),
+                        "fees_year" => date('Y'),
+                        "pay_date" => date('Y-m-d'),
+                        "pay_method" => "ECS",
+                        "ecs_id" => $ecs->id
+                    );
+                }
+                MembershipFees::insert($mf);
+                EcsDetails::whereIn('id', $ecs_id)->update(['existance' => 'tracked']);
+            }
+        } else {
+            $ecs_ = EcsDetails::select('id', 'Amount', 'member_id', 'status')
+            ->whereIn('id', $request->ecs_id)->get();
+            if(!$ecs_->isEmpty()) {
+                $mf = array();
+                $ecs_id = array();
+                foreach($ecs_ as $ecs) {
+                    $ecs_id[] = $ecs->id;
+                    if($ecs->status == "Successful")
+                    $status = "success";
+                    else
+                    $status = "pending";
+                    $mf[] = array(
+                        "member_id" => $ecs->member_id,
+                        "status" => $status,
+                        "fees_amount" => $ecs->Amount,
+                        "paid_amount" => $ecs->Amount,
+                        "fees_month" => date('m'),
+                        "fees_year" => date('Y'),
+                        "pay_date" => date('Y-m-d'),
+                        "pay_method" => "ECS",
+                        "ecs_id" => $ecs->id
+                    );
+                }
+                MembershipFees::insert($mf);
+                EcsDetails::whereIn('id', $ecs_id)->update(['existance' => 'tracked']);
+            }
+        }
+        return redirect()->back();
+    }
+    public function loan_repayment(Request $request) {
+        $request->validate([
+            "algo" => "required|in:ecsid,logic",
+            "ecs_id" => "required_if:algo,ecsid|array"
+        ]);
+        return "Loan Repayment Logic Comes Here!";
     }
 }
