@@ -37,7 +37,7 @@ class ECSController extends Controller
         }
         return $doc_name;
     }
-    private function returnFinalECS($bool) {
+    private function returnFinalECS() {
         $ecsData = EcsBankData::where([
             'ecs_month' => date('m'),
             'ecs_year' => date('Y'),
@@ -65,11 +65,12 @@ class ECSController extends Controller
             foreach($temp_returned as $temp) {
                 foreach($temp as $row_) {
                     $row = array_column($row_, "text");
-                    if(empty($row[$pointers['returned']['Beneficiary_AccNo']]) && !empty($row[$pointers['returned']['Beneficiary_Name']])) {
+                    /*if(empty($row[$pointers['returned']['Beneficiary_AccNo']]) && !empty($row[$pointers['returned']['Beneficiary_Name']])) {
                         $returned[$i-1]['name'] .= " ".$row[$pointers['returned']['Beneficiary_Name']];
-                    } elseif(!empty($row[$pointers['returned']['Beneficiary_AccNo']]) && !empty($row[$pointers['returned']['Beneficiary_Name']])) {
+                    } else*/
+                    if(!empty($row[$pointers['returned']['Beneficiary_AccNo']]) && !empty($row[$pointers['returned']['Amount']])) {
                     $returned[$i] = array(
-                        "name" => $row[$pointers['returned']['Beneficiary_Name']],
+                        //"name" => $row[$pointers['returned']['Beneficiary_Name']],
                         "accno" => $row[$pointers['returned']['Beneficiary_AccNo']],
                         "amount" => floatval(str_replace(',', '', $row[$pointers['returned']['Amount']])),
                         "status" => "Returned"
@@ -92,11 +93,12 @@ class ECSController extends Controller
             foreach($temp_rejected as $temp) {
                 foreach($temp as $row_) {
                     $row = array_column($row_, "text");
-                    if(empty($row[$pointers['rejected']['Beneficiary_AccNo']]) && !empty($row[$pointers['rejected']['Beneficiary_Name']])) {
+                    /*if(empty($row[$pointers['rejected']['Beneficiary_AccNo']]) && !empty($row[$pointers['rejected']['Beneficiary_Name']])) {
                         $rejected[$i-1]['name'] .= " ".$row[$pointers['rejected']['Beneficiary_Name']];
-                    } elseif(!empty($row[$pointers['rejected']['Beneficiary_AccNo']]) && !empty($row[$pointers['rejected']['Beneficiary_Name']])) {
+                    } else*/
+                    if(!empty($row[$pointers['rejected']['Beneficiary_AccNo']]) && !empty($row[$pointers['rejected']['Amount']])) {
                     $rejected[$i] = array(
-                        "name" => $row[$pointers['rejected']['Beneficiary_Name']],
+                        //"name" => $row[$pointers['rejected']['Beneficiary_Name']],
                         "accno" => $row[$pointers['rejected']['Beneficiary_AccNo']],
                         "amount" => floatval(str_replace(',', '', $row[$pointers['rejected']['Amount']])),
                         "status" => "Rejected"
@@ -125,38 +127,39 @@ class ECSController extends Controller
                 foreach($temp as $row_) {
                     $row = array_column($row_, "text");
                     $status = "Successful";
-                    $trust = 0;
+                    //$trust = 0;
                     $amount = floatval(str_replace(',', '', $row[$pointers['transaction']['Amount']]));
-                    if(empty($row[$pointers['transaction']['Beneficiary_AccNo']]) && !empty($row[$pointers['transaction']['Beneficiary_Name']])) {
+                    /*if(empty($row[$pointers['transaction']['Beneficiary_AccNo']]) && !empty($row[$pointers['transaction']['Beneficiary_Name']])) {
                         $all[$i-1]['Beneficiary_Name'] .= " ".$row[$pointers['transaction']['Beneficiary_Name']];
-                    } elseif(!empty($row[$pointers['transaction']['Beneficiary_AccNo']]) && !empty($row[$pointers['transaction']['Beneficiary_Name']])) {
+                    } else*/
+                    if(!empty($row[$pointers['transaction']['Beneficiary_AccNo']]) && !empty($row[$pointers['transaction']['Amount']])) {
                         foreach($subtract as $key=>$temp) {
-                            if($temp['accno'] == $row[$pointers['transaction']['Beneficiary_AccNo']]) {
-                                $trust++;
+                            if($temp['accno'] == $row[$pointers['transaction']['Beneficiary_AccNo']] && $temp['amount'] == $amount) {
+                                //$trust++;
                                 $status = $temp['status'];
-                                if($temp['amount'] == $amount) {
+                                /*if($temp['amount'] == $amount) {
                                     $trust++;
                                     //unset($subtract[$key]);
-                                }
+                                }*/
                             }
                         }
-                        if($bool){
+                        //if($bool){
                             $all[$i] = array(
-                                "SNO" => $row[$pointers['transaction']['SNO']],
-                                "UMRN" => $row[$pointers['transaction']['UMRN']],
-                                "BankCode" => $row[$pointers['transaction']['BankCode']],
+                                //"SNO" => $row[$pointers['transaction']['SNO']],
+                                //"UMRN" => $row[$pointers['transaction']['UMRN']],
+                                //"BankCode" => $row[$pointers['transaction']['BankCode']],
                                 "Beneficiary_AccNo" => $row[$pointers['transaction']['Beneficiary_AccNo']],
-                                "Beneficiary_Name" => str_replace(array("\r", "\n"), '', $row[$pointers['transaction']['Beneficiary_Name']]),
-                                "Settlement_Date" => $row[$pointers['transaction']['Settlement_Date']],
+                                //"Beneficiary_Name" => str_replace(array("\r", "\n"), '', $row[$pointers['transaction']['Beneficiary_Name']]),
+                                //"Settlement_Date" => $row[$pointers['transaction']['Settlement_Date']],
                                 "Amount" => $amount,
-                                "Start_Date" => $row[$pointers['transaction']['Start_Date']],
-                                "End_Date" => $row[$pointers['transaction']['End_Date']],
-                                "Frequency" => $row[$pointers['transaction']['Frequency']],
+                                //"Start_Date" => $row[$pointers['transaction']['Start_Date']],
+                                //"End_Date" => $row[$pointers['transaction']['End_Date']],
+                                //"Frequency" => $row[$pointers['transaction']['Frequency']],
                                 "member_id" => 0,
                                 "status" => $status,
                                 "original_file_id" => $ecsData->id
                             );
-                        } else {
+                        /*} else {
                             $all[$i] = array(
                                 "SNO" => $row[$pointers['transaction']['SNO']],
                                 "UMRN" => $row[$pointers['transaction']['UMRN']],
@@ -171,7 +174,7 @@ class ECSController extends Controller
                                 "Status" => $status,
                                 "surety" => $trust
                             );
-                        }
+                        }*/
                     $i++;
                     }
                 }
@@ -222,7 +225,7 @@ class ECSController extends Controller
         }
         return redirect()->back();
     }
-    public function processECS() {
+    public function processECS($step = null) {
         $ecsData = EcsBankData::where([
             'ecs_month' => date('m'),
             'ecs_year' => date('Y'),
@@ -231,11 +234,16 @@ class ECSController extends Controller
         if($ecsData == null) {
             return redirect()->back();
         }
-        if(session('step'))
-        $step = session('step');
-        else {
+        if($step == 1) {
             $step = 1;
             session(['step' => 1]);
+        } else {
+            if(session('step'))
+            $step = session('step');
+            else {
+                $step = 1;
+                session(['step' => 1]);
+            }
         }
         $json = null;
         switch($step) {
@@ -297,55 +305,73 @@ class ECSController extends Controller
             return redirect()->back();
         }
         if(session('step') == 1) {
-            $fields = array("transaction"=>$request->input('fields'));
-            $ecsData->pointers = json_encode($fields);
-            $ecsData->save();
+            if(in_array("Beneficiary_AccNo", $request->fields) && in_array("Amount", $request->fields)) {
+                $fields = array("transaction"=>$request->input('fields'));
+                $ecsData->pointers = json_encode($fields);
+                $ecsData->save();
+            } else {
+                return redirect()->back()->with('message', 'Beneficiary_AccNo, Amount must be pointed.');
+            }
             session(['step' => 2]);
         } elseif(session('step') == 2) {
             if($ecsData->returned_json) {
-                if(in_array("Beneficiary_AccNo", $request->fields) && in_array("Beneficiary_Name", $request->fields) && in_array("Amount", $request->fields)) {
+                if(in_array("Beneficiary_AccNo", $request->fields) && in_array("Amount", $request->fields)) {
                 $fields = json_decode($ecsData->pointers, true);
                 $fields["returned"] = $request->input('fields');
                 $ecsData->pointers = json_encode($fields);
                 $ecsData->save();
                 } else {
-                    return redirect()->back()->with('message', 'Beneficiary_AccNo, Beneficiary_Name, Amount must be pointed.');
+                    return redirect()->back()->with('message', 'Beneficiary_AccNo, Amount must be pointed.');
                 }
             }
             session(['step' => 3]);
         } elseif(session('step') == 3) {
             if($ecsData->rejected_json) {
-                if(in_array("Beneficiary_AccNo", $request->fields) && in_array("Beneficiary_Name", $request->fields) && in_array("Amount", $request->fields)) {
+                if(in_array("Beneficiary_AccNo", $request->fields) && in_array("Amount", $request->fields)) {
                 $fields = json_decode($ecsData->pointers, true);
                 $fields["rejected"] = $request->input('fields');
                 $ecsData->pointers = json_encode($fields);
                 $ecsData->save();
                 } else {
-                    return redirect()->back()->with('message', 'Beneficiary_AccNo, Beneficiary_Name, Amount must be pointed.');
+                    return redirect()->back()->with('message', 'Beneficiary_AccNo, Amount must be pointed.');
                 }
             }
             $request->session()->forget('step');
-            return redirect()->route('Finalize_ECS');
+            //return redirect()->route('Finalize_ECS');
+            //$this->InsertECS();
+            //this is InsertECS Function
+            $result = $this->returnFinalECS();
+            if($result == false)
+            return "An Error Occured! ErrorCode:001";
+            $ecsfile_id = $result[0]->id;
+            $result[0]->processed = 1;
+            $result[0]->save();
+            EcsDetails::insert($result[1]);
+            //DB::update('UPDATE `ecs_details` inner join `users` on `ecs_details`.`Beneficiary_AccNo` = `users`.`acc_no` SET `ecs_details`.`member_id` = `users`.`id` where `users`.`ifsc_code` = `ecs_details`.`BankCode` or `users`.`name` = `ecs_details`.`Beneficiary_Name`');
+            DB::update('UPDATE `ecs_details` inner join `users` on `ecs_details`.`Beneficiary_AccNo` = `users`.`acc_no` SET `ecs_details`.`member_id` = `users`.`id`');
+            return redirect()->route('ECSTracking');
         }
-        return redirect()->back();
+        return redirect()->route('Process_ECS');
     }
-    public function FinalizeECS() {
-        $result = $this->returnFinalECS(false);
+    /*public function FinalizeECS() {
+        $result = $this->returnFinalECS();
         if($result == false)
         return redirect()->back();
         return view('ECS.ECSConfirm')->with('result', $result[1]);
-    }
-    public function InsertECS() {
-        $result = $this->returnFinalECS(true);
+    }*/
+    /*public function InsertECS() {
+        $result = $this->returnFinalECS();
         if($result == false)
         return redirect()->back();
         $ecsfile_id = $result[0]->id;
         $result[0]->processed = 1;
         $result[0]->save();
         EcsDetails::insert($result[1]);
-        DB::update('UPDATE `ecs_details` inner join `users` on `ecs_details`.`Beneficiary_AccNo` = `users`.`acc_no` SET `ecs_details`.`member_id` = `users`.`id` where `users`.`ifsc_code` = `ecs_details`.`BankCode` or `users`.`name` = `ecs_details`.`Beneficiary_Name`');
+        //DB::update('UPDATE `ecs_details` inner join `users` on `ecs_details`.`Beneficiary_AccNo` = `users`.`acc_no` SET `ecs_details`.`member_id` = `users`.`id` where `users`.`ifsc_code` = `ecs_details`.`BankCode` or `users`.`name` = `ecs_details`.`Beneficiary_Name`');
+        DB::update('UPDATE `ecs_details` inner join `users` on `ecs_details`.`Beneficiary_AccNo` = `users`.`acc_no` SET `ecs_details`.`member_id` = `users`.`id`');
+        dd("done");
         return redirect()->route('ECSTracking');
-    }
+    }*/
     public function ECSTrackingView() {
         $ecs = EcsDetails::where(['member_id' => '0', 'existance' => 'untracked'])->with('pdf')->get();
         $bool = true;
@@ -473,18 +499,30 @@ class ECSController extends Controller
         }
         return redirect()->back();
     }
-    public function loan_repayment(Request $request) {
+    /*public function loan_repayment(Request $request) {
         $request->validate([
             "algo" => "required|in:ecsid,logic",
             "ecs_id" => "required_if:algo,ecsid|array"
         ]);
         return "Loan Repayment Logic Comes Here!";
-    }
+    }*/
     public function ECSByMonth() {
-        $ecs = EcsBankData::orderBy('id', 'desc')->get();
+        $ecs = EcsBankData::where('processed', 1)->orderBy('id', 'desc')->paginate(12);
         return view('ECS.ECSByMonth')->with('ecs', $ecs);
     }
-    public function ECSByMember() {
-        return view('ECS.ECSByMember');
+    public function ECSByMember(Request $request) {
+        $user = User::select('id')->where('membership_code', $request->membership_code)->first();
+        $ecs = array();
+        if($user != null) {
+        $ecs = EcsDetails::where([
+            'member_id' => $user->id,
+        ])->get();
+        }
+        //dd($ecs);
+        return view('ECS.ECSByMember', ['ecs' => $ecs]);
+    }
+    public function ECSForm() {
+        $members = User::where('membership', 1)->get();
+        return view('ECS.ECSForm')->with('members', $members);
     }
 }

@@ -24,22 +24,14 @@
     <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>SNO<br>(in PDF)</th>
-                    <th>UMRN</th>
-                    <th>BankCode</th>
                     <th>Beneficiary AccNo</th>
-                    <th>Beneficiary Name</th>
                     <th>Amount</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                <td>{{$ecs->SNO}}</td>
-                <td>{{$ecs->UMRN}}</td>
-                <td>{{$ecs->BankCode}}</td>
                 <td>{{$ecs->Beneficiary_AccNo}}</td>
-                <td>{{$ecs->Beneficiary_Name}}</td>
                 <td>{{$ecs->Amount}}</td>
                 <td>{{$ecs->status}}</td>
                 </tr>

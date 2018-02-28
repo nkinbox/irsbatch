@@ -29,7 +29,7 @@
             </li>
     
             <li class="nav-item">
-                <a class="nav-link{{(request()->route()->getName() == 'UploadEcsForm') ? ' active' : ''}}" href="{{ route('UploadEcsForm') }}">
+                <a class="nav-link{{(request()->route()->getName() == 'ECSForm') ? ' active' : ''}}" href="{{ route('ECSForm') }}">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     ECS Form
                 </a>

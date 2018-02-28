@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/jvmaps/jqvmap.min.css') }}">
 
 <link rel="stylesheet" href="{{ asset('css/quillpro/quillpro.css') }}">
-@if(request()->route()->getName() == 'ECSByMember')
+@if(request()->route()->getName() == 'ECSForm')
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
 @endif
@@ -269,7 +269,7 @@
 <script type="text/javascript" src="{{ asset('plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/imagepick.js') }}"></script>
-@if(request()->route()->getName() == 'ECSByMember')
+@if(request()->route()->getName() == 'ECSForm')
 <script type="text/javascript">
 	$(document).ready(function() {
     var printCounter = 0;

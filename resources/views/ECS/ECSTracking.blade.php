@@ -23,7 +23,7 @@
     <h2>ECS Tracking</h2>
     @if(count($ecs_list[1]) > 0)
     @if($ecs_list[0])
-    <p>[Members of following ECS are Unavailable; Allot them using Membership Code]</p>
+    <p>[Following Account Numbers are Not in Database; Allot them to respective Member using Membership Code]</p>
     <form action="{{ route('IgnoreECS') }}" method="post" onsubmit="return confirm('This will Ignore Selected ECS and It cannot be Undone.');">
     {{ csrf_field() }}
     <table class="table table-responsive">
@@ -32,28 +32,23 @@
                 <th>
                     <input id="sa_checkbox" type="checkbox">
                 </th>
-                <th>SNO<br>(in PDF)</th>
-                <th>UMRN</th>
-                <th>BankCode</th>
+                <th>#</th>
                 <th>Beneficiary AccNo</th>
-                <th>Beneficiary Name</th>
                 <th>Amount</th>
                 <th>Status</th>
-                <th>Files</th>
+                <th>ECS File</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
+            <?php $i = 0; ?>
             @foreach($ecs_list[1] as $ecs)
             <tr>
             <td>
                 <input type="checkbox" name="ecs_id[]" value="{{ $ecs->id }}">
             </td>
-            <td>{{$ecs->SNO}}</td>
-            <td>{{$ecs->UMRN}}</td>
-            <td>{{$ecs->BankCode}}</td>
+            <td><?php $i++; echo $i; ?></td>
             <td>{{$ecs->Beneficiary_AccNo}}</td>
-            <td>{{$ecs->Beneficiary_Name}}</td>
             <td>{{$ecs->Amount}}</td>
             <td>{{$ecs->status}}</td>
             <td><a href="{{ asset('ecs/'.$ecs->pdf->transactions) }}" target="_blank">View PDF</a></td>
@@ -68,7 +63,7 @@
     <button type="submit" class="btn btn-danger">Ignore Selected ECS</button>
     </form>
     @else
-    <p>[Following ECS are Untracked; Perform Membership Allot or Loan Repayment Process Here]</p>
+    <p>[Following ECS are Untracked; Perform Membership Fees Process Here]</p>
     <script type="text/javascript">
         function submitForm(action) {
           var bool = confirm('This Action Cannot be Undone. Are you sure to continue?');
@@ -86,28 +81,25 @@
                 <th>
                     <input id="sa_checkbox" type="checkbox">
                 </th>
-                <th>SNO<br>(in PDF)</th>
-                <th>UMRN</th>
+                <th>SNO</th>
                 <th>Amount</th>
                 <th>Member Name</th>
                 <th>Membership Code</th>
                 <th>ECS Status</th>
-                <th>File</th>
             </tr>
         </thead>
         <tbody>
+            <?php $i = 0; ?>
             @foreach($ecs_list[1] as $ecs)
             <tr>
             <td>
                 <input type="checkbox" name="ecs_id[]" value="{{ $ecs->id }}">
             </td>
-            <td>{{$ecs->SNO}}</td>
-            <td>{{$ecs->UMRN}}</td>
+            <td><?php $i++; echo $i;?></td>
             <td>{{$ecs->Amount}}</td>
             <td>{{$ecs->member_detail->name}}</td>
             <td>{{$ecs->member_detail->membership_code}}</td>
             <td>{{$ecs->status}}</td>
-            <td><a href="{{ asset('ecs/'.$ecs->pdf->transactions) }}" target="_blank">View PDF</a></td>
             </tr>
             @endforeach
         </tbody>
@@ -116,7 +108,6 @@
     </form>
     <button onclick="submitForm('{{ route('IgnoreECS') }}')" class="btn btn-danger">Ignore Selected ECS</button>
     <button onclick="submitForm('{{ route('MarkAsMembershipFees') }}')" class="btn btn-success">Selected ECS are Membership Fees</button>
-    <button onclick="submitForm('{{ route('MarkAsLoanRepayment') }}')" class="btn btn-primary">Selected ECS are Loan Repayment</button>
     <br>
     <hr>
     <h2>Mass Allotment</h2>
@@ -130,11 +121,7 @@
             <div class="form-group">
                 <label class="active">Operator</label>
                 <select  class="form-control" name="operator">
-                    <option value="0">Equals</option>
-                    <option value="1">Less Than Equal To</option>
-                    <option value="2">Less Than</option>
-                    <option value="3">Greater Than Equal To</option>
-                    <option value="4">Greater Than</option>
+                    <option value="0" selected>Equals</option>
                 </select>
             </div>
             </div>
@@ -146,13 +133,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-default">Membership Fees</button>
-    </form>
-    <hr>
-    <h5>Loan Repayment</h5>
-    <form action="{{route('MarkAsLoanRepayment')}}" method="post" style="padding-top:20px" onsubmit="return confirm('Process Mass Assignment?');">
-        {{ csrf_field() }}
-        <input type="hidden" name="algo" value="logic">
-        <button type="submit" class="btn btn-default">Loan Repayment</button>
     </form>
     @endif
     @else

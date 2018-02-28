@@ -24,14 +24,15 @@
     @switch(session('step'))
     @case(1)
     <h2>All Transactions</h2>
+    <p>Point Only Two Fields: Beneficiary_AccNo, Amount</p>
     @break
     @case(2)
     <h2>Returned Transactions</h2>
-    <p>Point Only Three Fields: Beneficiary_Name, Beneficiary_AccNo, Amount</p>
+    <p>Point Only Two Fields: Beneficiary_AccNo, Amount</p>
     @break
     @case(3)
     <h2>Rejected Transactions</h2>
-    <p>Point Only Three Fields: Beneficiary_Name, Beneficiary_AccNo, Amount</p>
+    <p>Point Only Two Fields: Beneficiary_AccNo, Amount</p>
     @break
     @endswitch
     @else
@@ -52,29 +53,16 @@
         @if(count($result[0])>0)
         <table>
             <thead>
-            <tr><?php
-                $fields = array('SNO', 'UMRN', 'BankCode', 'Beneficiary_AccNo', 'Beneficiary_Name', 'Settlement_Date', 'Amount', 'Start_Date', 'End_Date','Frequency');
-                if((count($result[0][0]) == count($fields)) && session('step') == 1) { ?>
+            <tr>
                 @for($i = 0; $i < count($result[0][0]); $i++)
                 <th>
                     <select name="fields[{{$i}}]">
-                        @foreach($fields as $key => $val)
-                        <option{{($key == $i)?' selected':''}}>{{$val}}</option>
-                        @endforeach
+                        <option value="SNO">----</option>
+                        <option>Beneficiary_AccNo</option>
+                        <option>Amount</option>
                     </select>
                 </th>
                 @endfor
-                <?php } else { ?>
-                    @for($i = 0; $i < count($result[0][0]); $i++)
-                    <th>
-                        <select name="fields[{{$i}}]">
-                            @foreach($fields as $val)
-                            <option>{{$val}}</option>
-                            @endforeach
-                        </select>
-                    </th>
-                    @endfor
-                <?php } ?>
             </tr>
             </thead>
             <tbody>

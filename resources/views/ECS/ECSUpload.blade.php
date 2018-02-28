@@ -15,7 +15,7 @@
         @if (session('error'))
         <div class="alert alert-danger">
             <ul>
-                <li>{{ session('error') }} <a href="{{ route('Process_ECS') }}">Click Here To Retry ECS Process</a></li>
+                <li>{{ session('error') }} <a href="{{ route('Process_ECS', ['step' => 1]) }}">Click Here To Retry ECS Process</a></li>
             </ul>
         </div>
         @endif

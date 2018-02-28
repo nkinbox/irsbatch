@@ -15,56 +15,52 @@
 <a href="ecs.php"><button type="button" class="btn btn-primary">Add New Field</button></a>
 </div> -->
 <div class="col-lg-12 pb-5">
-    <h2>ECS Table</h2>
-    
+    <h2>ECS Details By Member</h2>
+    <form  action="{{route('ECSByMember')}}" method="post">
+        {{ csrf_field() }}
+        <div class="form-group">
+            <label for="member-code" class="active">Membership Code</label>
+            <input id="member-code" type="text" class="form-control" name="membership_code" placeholder="Membership Code" value="" required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+@if(count($ecs) > 0)
     <table class="table table-responsive" id="example" class="display">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Membership no</th>
-                <th>Phone</th>
+                <th>Membership Code</th>
+                <th>Date</th>
                 <th>Bank Name</th>
                 <th>IFSC Code</th>
-                <th>Account Number</th>
-                <th>Action</th>
+                <th>Account No</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Flag</th>
+                <th>PDF</th>
             </tr>
         </thead>
         <tbody>
+            <?php $i=0; ?>
+            @foreach($ecs as $ecs_)
             <tr>
-                <td >1</td>
-                <td>deepak</td>
-                <td>34235345</td>
-                <td>8527439091</td>
-                <td>state bank of india</td>
-                <td>dfsdfsdf</td>
-                <td>45345435435345</td>
-                <td><a href="#">View</a></td>
-
+                <td><?php $i++; echo $i;?></td>
+                <td>{{$ecs_->member_detail->name}}</td>
+                <td>{{$ecs_->member_detail->membership_code}}</td>
+                <td>{{date('M Y', strtotime('01-'.$ecs_->pdf->ecs_month.'-'.$ecs_->pdf->ecs_year))}}</td>
+                <td>{{$ecs_->member_detail->bank_name}}</td>
+                <td>{{$ecs_->member_detail->ifsc_code}}</td>
+                <td>{{$ecs_->member_detail->acc_no}}</td>
+                <td>{{$ecs_->Amount}}</td>
+                <td>{{$ecs_->status}}</td>
+                <td>{{$ecs_->existance}}</td>
+                <td><a href="{{asset('ecs/'.$ecs_->pdf->transactions)}}" target="_blank">View</a></td>
             </tr>
-            <tr>
-                <td >2</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td><a href="#">View</a></td>
-            </tr>
-            <tr>
-                <td >2</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td>Table cell</td>
-                <td><a href="#">View</a></td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
-
+@endif
 </div>	
 </div>
 </div>
