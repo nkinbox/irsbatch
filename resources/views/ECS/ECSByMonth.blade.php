@@ -14,6 +14,38 @@
     <div class="add-field" style="position: absolute;right: 0;">
         <a href="{{ route('UploadEcsForm') }}"><button type="button" class="btn btn-primary">Add New File</button></a>
     </div>
+    <form action="{{route('ECSByMonth')}}" method="post" class="form-inline">
+        {{ csrf_field() }}
+        <div class="form-group">
+        <select name="month" class="form-control">
+            <option>Month</option>
+            <option value="01"{{ ($month == "01")?' selected':''}}>January</option>
+            <option value="02"{{ ($month == "02")?' selected':''}}>February</option>
+            <option value="03"{{ ($month == "03")?' selected':''}}>March</option>
+            <option value="04"{{ ($month == "04")?' selected':''}}>April</option>
+            <option value="05"{{ ($month == "05")?' selected':''}}>May</option>
+            <option value="06"{{ ($month == "06")?' selected':''}}>June</option>
+            <option value="07"{{ ($month == "07")?' selected':''}}>July</option>
+            <option value="08"{{ ($month == "08")?' selected':''}}>August</option>
+            <option value="09"{{ ($month == "09")?' selected':''}}>September</option>
+            <option value="10"{{ ($month == "10")?' selected':''}}>October</option>
+            <option value="11"{{ ($month == "11")?' selected':''}}>November</option>
+            <option value="12"{{ ($month == "12")?' selected':''}}>December</option>
+        </select>
+        </div>
+        <div class="form-group">
+        <select name="year" class="form-control">
+            <option>Year</option>
+            <?php $y = date('Y');?>
+            @for($i = $y; $i > ($y - 5); $i--)
+            <option{{ ($year == $i)?' selected':''}}>{{$i}}</option>
+            @endfor
+        </select>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
     <div class="col-lg-12 pb-5">
         <br>
         <h2>ECS Details Month Wise</h2>

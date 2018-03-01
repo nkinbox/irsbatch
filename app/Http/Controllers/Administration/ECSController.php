@@ -506,9 +506,14 @@ class ECSController extends Controller
         ]);
         return "Loan Repayment Logic Comes Here!";
     }*/
-    public function ECSByMonth() {
-        $ecs = EcsBankData::where('processed', 1)->orderBy('id', 'desc')->paginate(12);
-        return view('ECS.ECSByMonth')->with('ecs', $ecs);
+    public function ECSByMonth(Request $request) {
+        if(!empty($request->month) && !empty($request->year))
+        $where = ["ecs_month" => $request->month, "ecs_year" => $request->year, "processed" => 1];
+        else
+        $where = ["processed" => 1];
+        $ecs = EcsBankData::where($where)->orderBy('id', 'desc')->paginate(12);
+        //dd($ecs);
+        return view('ECS.ECSByMonth', ['ecs' => $ecs, 'month' => $request->month, 'year' => $request->year]);
     }
     public function ECSByMember(Request $request) {
         $user = User::select('id')->where('membership_code', $request->membership_code)->first();

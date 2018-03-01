@@ -39,9 +39,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ecs_membership_fees', 'Administration\ECSController@membership_fees')->name('MarkAsMembershipFees');
     //Route::post('/ecs_loan_repayment', 'Administration\ECSController@loan_repayment')->name('MarkAsLoanRepayment');
     Route::get('/ecs_by_month', 'Administration\ECSController@ECSByMonth')->name('ECSByMonth');
+    Route::post('/ecs_by_month', 'Administration\ECSController@ECSByMonth')->name('ECSByMonth');
     Route::get('/ecs_by_member', 'Administration\ECSController@ECSByMember')->name('ECSByMember');
     Route::post('/ecs_by_member', 'Administration\ECSController@ECSByMember')->name('ECSByMember');
     Route::get('/ecs_form', 'Administration\ECSController@ECSForm')->name('ECSForm');
+    Route::get('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
+    Route::post('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
 });
 
 

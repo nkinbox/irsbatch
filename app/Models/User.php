@@ -21,4 +21,7 @@ class User extends Authenticatable
     public function position() {
         return $this->hasOne('App\Models\OfficeBearer', 'id', 'position_id');
     }
+    public function membership_fees() {
+        return $this->hasMany('App\Models\MembershipFees', 'member_id', 'id');
+    }
 }
