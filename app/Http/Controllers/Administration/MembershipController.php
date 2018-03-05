@@ -25,5 +25,16 @@ class MembershipController extends Controller
         }])->get();
         //dd($members);
         return view('Membership.MembershipDetails', ['members' => $members, 'month' => $request->month, 'year' => $request->year]);
-    }
+    }/*
+    public function verifyTransfer(Request $request) {
+        $request->validate([
+            "fees_id" => "required|exists:membership_fees,id"
+        ]);
+        $id = MembershipFees::find($request->fees_id);
+        if(($id->pay_method == "TRANSFER" || $id->pay_method == "CHEQUE") && $id->status == "unverified") {
+            $id->status = "success";
+            $id->save();
+        }
+        return redirect()->back();
+    }*/
 }

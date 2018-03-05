@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ecs_form', 'Administration\ECSController@ECSForm')->name('ECSForm');
     Route::get('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
     Route::post('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
+    //Route::post('/transfer_verify', 'Administration\MembershipController@verifyTransfer')->name('VerifyTransfer');
 });
 
 

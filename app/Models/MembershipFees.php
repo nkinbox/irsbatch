@@ -19,6 +19,6 @@ class MembershipFees extends Model
         "ecs_id",
     ];
     public function paid_to() {
-        return $this->hasOne('App\Models\User', 'id', 'cash_to')->select('name');
+        return $this->hasOne('App\Models\User', 'id', 'given_to')->select('name');
     }
 }

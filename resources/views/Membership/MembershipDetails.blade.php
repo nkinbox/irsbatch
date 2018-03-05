@@ -75,7 +75,7 @@
                 <td>
                 <?php
                 if(!$member->membership_fees->isEmpty()) {
-                    if($member->membership_fees[0]->pay_method == "CASH")
+                    if($member->membership_fees[0]->pay_method == "CASH" || $member->membership_fees[0]->pay_method == "CHEQUE")
                     echo $member->membership_fees[0]->pay_method. "<br>(" .$member->membership_fees[0]->paid_to->name. ")";
                     elseif($member->membership_fees[0]->pay_method == "TRANSFER")
                     echo $member->membership_fees[0]->pay_method. "<br>(<a href='" .asset('receipts/'.$member->membership_fees[0]->receipt_file). "' target='_blank'>Receipt</a>)";
@@ -87,21 +87,24 @@
                 ?>
                 </td>
                 <td>{{(!$member->membership_fees->isEmpty())?$member->membership_fees[0]->paid_amount:'-'}}</td>
-                <td>
-                <?php
+                <td>{{(!$member->membership_fees->isEmpty())?$member->membership_fees[0]->status:'-'}}</td>
+                <?php /*
                 if(!$member->membership_fees->isEmpty()) {
-                    if($member->membership_fees[0]->status == "CASH") //working on this line cash == success
-                    echo $member->membership_fees[0]->pay_method. "<br>(" .$member->membership_fees[0]->paid_to->name. ")";
-                    elseif($member->membership_fees[0]->pay_method == "TRANSFER")
-                    echo $member->membership_fees[0]->pay_method. "<br>(<a href='" .asset('receipts/'.$member->membership_fees[0]->receipt_file). "' target='_blank'>Receipt</a>)";
-                    else
-                    echo $member->membership_fees[0]->pay_method;
+                    echo $member->membership_fees[0]->status;
+                    if(($member->membership_fees[0]->pay_method == "TRANSFER" || $member->membership_fees[0]->pay_method == "CHEQUE") && $member->membership_fees[0]->status == "unverified") {
+                ?>
+                <br>(<a href="#" onclick="event.preventDefault();
+                document.getElementById('verify_form{{$member->membership_fees[0]->id}}').submit();">Verify</a>)
+                <form id="verify_form{{$member->membership_fees[0]->id}}" action="{{ route('VerifyTransfer') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="fees_id" value="{{$member->membership_fees[0]->id}}">
+                </form>
+                <?php
+                    }
                 } else {
                     echo "-";
-                }
+                }*/
                 ?>
-                </td>
-                <td>{{(!$member->membership_fees->isEmpty())?$member->membership_fees[0]->status:'-'}}</td>
             </tr>
             @endforeach
         </tbody>
