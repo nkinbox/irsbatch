@@ -46,6 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
     Route::post('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
     //Route::post('/transfer_verify', 'Administration\MembershipController@verifyTransfer')->name('VerifyTransfer');
+    Route::get('/membership/collection/{id?}', 'Administration\MembershipController@LHMembershipCollectionForm')->name('LHMembershipCollectionForm');
+    Route::get('/membership/collection/view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
+    Route::post('/membership/collection/view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
+    Route::post('/membership/collection', 'Administration\MembershipController@LHMembershipCollection')->name('LHMembershipCollection');
 });
 
 

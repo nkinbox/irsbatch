@@ -71,11 +71,11 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="fee-collectio.php">
+            <a class="nav-link{{(request()->route()->getName() == 'LHMembershipCollectionView') ? ' active' : ''}}" href="{{ route('LHMembershipCollectionView') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                MemberShip Fee Collection
+                Membership Collection
             </a>
-        </li> 
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="fund-with-him.php">
                 <i class="batch-icon batch-icon-star"></i>

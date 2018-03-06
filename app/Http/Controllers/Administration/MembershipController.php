@@ -12,8 +12,11 @@ class MembershipController extends Controller
 {
     public function MembershipDetails(Request $request) {
         $user = Auth::user();
-        if($user->position_id == 11)
+        if($user->position_id == 11 && session('mode') == "lobbyhead") {
         $where = ['membership' => 1, 'hq' => $user->hq];
+        }
+        elseif(session('mode') == "member")
+        $where = ['id' => $user->id, 'membership' => 1];
         else
         $where = ['membership' => 1];
         if(!empty($request->month) && !empty($request->year))
@@ -37,4 +40,47 @@ class MembershipController extends Controller
         }
         return redirect()->back();
     }*/
+    public function LHMembershipCollectionForm($id = null) {        
+        return view('Membership.MembershipCollectionForm');
+    }
+    public function LHMembershipCollectionView(Request $request) {
+        $id = Auth::id();
+        if(!empty($request->month) && !empty($request->year)) {
+            $month = $request->month;
+            $year = $request->year;
+        } else {
+            $month = date('m');
+            $year = date('Y');
+        }
+        $fees = MembershipFees::where('given_to', $id)->whereMonth('pay_date', $month)->whereYear('pay_date', $year)->with('member_detail')->get();
+        return view('Membership.MembershipCollectionView', ['fees_' => $fees, 'month' => $request->month, 'year' => $request->year]);
+    }
+    public function LHMembershipCollection(Request $request) {
+        $request->validate([
+            "membership_code" => "required|string|exists:users",
+            "pay_method" => "required|string|in:CASH,CHEQUE",
+            "paid_amount" => "required|numeric",
+            "cheque_number" => "required_if:pay_method,CHEQUE|nullable|numeric|digits:6",
+            "cheque_date" => "required_if:pay_method,CHEQUE|nullable|date"
+        ]);
+        return $request;
+    }
+    public function ChequeStatusForm() {
+
+    }
+    public function ChequeStatus() {
+
+    }
+    public function TransferReceiptUploadForm() {
+
+    }
+    public function TransferReceiptUpload() {
+
+    }
+    public function PayUMoneyProcess() {
+
+    }
+    public function PayUMoneyResponse() {
+
+    }
 }

@@ -17,9 +17,9 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="membership-detail.php">
+            <a class="nav-link{{(request()->route()->getName() == 'MembershipDetails') ? ' active' : ''}}" href="{{ route('MembershipDetails') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                MemberShip Statement
+                Membership Statement
             </a>
         </li>
 

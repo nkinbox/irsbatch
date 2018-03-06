@@ -7,6 +7,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::post('/signup', 'API\Member\AdmissionController@SignUp')->name('SignUp');
     Route::get('/admission/pending_approvals', 'API\Member\AdmissionController@Pending')->name('PendingApprovals');
+    Route::post('/admission/application', 'API\Member\AdmissionController@ShowApplication')->name('ShowApplication');
     Route::post('/admission/application_status', 'API\Member\AdmissionController@ApplicationStatus')->name('ApplicationStatus');
     Route::post('/signature_upload', 'API\Member\AdmissionController@addSignature')->name('SignatureUpload');
 });

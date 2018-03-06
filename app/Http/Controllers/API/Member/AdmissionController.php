@@ -161,12 +161,19 @@ class AdmissionController extends Controller
             "message" => "Member Details sent for Approval Successfully."
         ]);
     }
-    public function ShowApplication($id) {
-        $member = User::where('id', $id)->with('documents')->first();
+    public function ShowApplication(Request $request) {
+        $member = User::where('id', $request->id)->with('documents')->first();
         //return $member;
-        if(is_null($member))
-        return redirect()->back()->with('error', 'No Application Selected');
-        return view('Member.Profile')->with('member', $member);
+        if(is_null($member)) {
+           return response()->json([
+            "success" => 0,
+            "message" => "No Application Selected."
+        ]);
+        }
+        return response()->json([
+            "success" => 1,
+            "member" => $member
+        ]);
     }
     public function ApplicationStatus(Request $request) {
         $request->validate([

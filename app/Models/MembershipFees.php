@@ -21,4 +21,10 @@ class MembershipFees extends Model
     public function paid_to() {
         return $this->hasOne('App\Models\User', 'id', 'given_to')->select('name');
     }
+    public function member_detail() {
+        return $this->hasOne('App\Models\User', 'id', 'member_id');
+    }
+    public function cheque_detail() {
+        return $this->hasOne('App\Models\Cheque', 'id', 'cheque_id');
+    }
 }
