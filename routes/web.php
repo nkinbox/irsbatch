@@ -45,11 +45,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ecs_form', 'Administration\ECSController@ECSForm')->name('ECSForm');
     Route::get('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
     Route::post('/membership_details', 'Administration\MembershipController@MembershipDetails')->name('MembershipDetails');
-    //Route::post('/transfer_verify', 'Administration\MembershipController@verifyTransfer')->name('VerifyTransfer');
-    Route::get('/membership/collection/{id?}', 'Administration\MembershipController@LHMembershipCollectionForm')->name('LHMembershipCollectionForm');
-    Route::get('/membership/collection/view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
-    Route::post('/membership/collection/view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
+    Route::post('/membership/verify', 'Administration\MembershipController@MembershipVerify')->name('MembershipVerify');
+    Route::get('/membership/collection', 'Administration\MembershipController@LHMembershipCollectionForm')->name('LHMembershipCollectionForm');
+    Route::get('/membership/collection_view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
+    Route::post('/membership/collection_view', 'Administration\MembershipController@LHMembershipCollectionView')->name('LHMembershipCollectionView');
     Route::post('/membership/collection', 'Administration\MembershipController@LHMembershipCollection')->name('LHMembershipCollection');
+    Route::get('/membership/pay', 'Administration\MembershipController@pay_membership_form')->name('PayMembershipForm');
+    Route::post('/membership/pay', 'Administration\MembershipController@pay_membership')->name('PayMembership');
 });
 
 

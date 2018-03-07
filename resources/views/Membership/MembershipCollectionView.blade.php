@@ -3,6 +3,11 @@
 <main class="main-content p-4 invisible" data-qp-animate-type="fadeIn" data-qp-animate-delay="600" role="main">
 <div class="row mb-4">
 <div class="col-md-12">
+        @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+        @endif
 <div class="card">
 <div class="card-body">
 <div class="row">
@@ -53,7 +58,7 @@
                     <th>Amount</th>
                     <th>Cheque/Cash</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -72,7 +77,9 @@
                     echo $fees->pay_method;
                     ?></td>
                     <td>{{ $fees->pay_date }}</td>
-                    <td><a href="{{ route('LHMembershipCollectionForm', ['id' => $fees->id]) }}">Modify</a></td>
+                    <td>
+                        {{$fees->status}}
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

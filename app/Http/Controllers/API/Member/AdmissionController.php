@@ -251,9 +251,26 @@ class AdmissionController extends Controller
         $code = '';
         $year = date('Y', strtotime($date));
         $month = date('m', strtotime($date));
+        switch($month) {
+            case $month<4:
+            $start = $year. "-01-01";
+            $end = $year. "-03-31";
+            break;
+            case $month<7:
+            $start = $year. "-04-01";
+            $end = $year. "-06-30";
+            break;
+            case $month<10:
+            $start = $year. "-07-01";
+            $end = $year. "-09-30";
+            break;
+            default:
+            $start = $year. "-10-01";
+            $end = $year. "-12-31";
+        }
         $count = User::where('membership_status', 'accepted')
-        ->whereMonth('applied_on', $month)
-        ->whereYear('applied_on', $year)->count();
+        ->whereBetween('applied_on',[$start,$end])->count();
+        
         $count++;
         $count = sprintf('%03d', $count);
         switch($month) {

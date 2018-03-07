@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\MembershipFees;
+use App\Models\Cheque;
 use Auth;
 
 class MembershipController extends Controller
@@ -24,23 +25,12 @@ class MembershipController extends Controller
         else
         $binding = [date('m'),date('Y')];
         $members = User::where($where)->with(['membership_fees'=>function($query) use ($binding){
-            $query->whereRaw("month(`pay_date`) = ? and year(`pay_date`) = ?", $binding);
+            $query->whereRaw("fees_month = ? and fees_year = ?", $binding);
         }])->get();
         //dd($members);
         return view('Membership.MembershipDetails', ['members' => $members, 'month' => $request->month, 'year' => $request->year]);
-    }/*
-    public function verifyTransfer(Request $request) {
-        $request->validate([
-            "fees_id" => "required|exists:membership_fees,id"
-        ]);
-        $id = MembershipFees::find($request->fees_id);
-        if(($id->pay_method == "TRANSFER" || $id->pay_method == "CHEQUE") && $id->status == "unverified") {
-            $id->status = "success";
-            $id->save();
-        }
-        return redirect()->back();
-    }*/
-    public function LHMembershipCollectionForm($id = null) {        
+    }
+    public function LHMembershipCollectionForm() {
         return view('Membership.MembershipCollectionForm');
     }
     public function LHMembershipCollectionView(Request $request) {
@@ -63,13 +53,101 @@ class MembershipController extends Controller
             "cheque_number" => "required_if:pay_method,CHEQUE|nullable|numeric|digits:6",
             "cheque_date" => "required_if:pay_method,CHEQUE|nullable|date"
         ]);
-        return $request;
-    }
-    public function ChequeStatusForm() {
+        $member = User::select('id')->where('membership_code', $request->membership_code)->first();
+        $mf_ = MembershipFees::where([
+            "member_id" => $member->id,
+            "fees_month" => date('m'),
+            "fees_year" => date('Y')
+        ])->first();
+        if($mf_ != null)
+        return redirect()->back()->with('e_message', 'Membership Fees Already Paid By '.$request->membership_code);
+        $mf = new MembershipFees;
+        $mf->member_id = $member->id;
+        $mf->fees_amount = $request->paid_amount;
+        $mf->paid_amount = $request->paid_amount;
+        $mf->fees_month = date('m');
+        $mf->fees_year = date('Y');
+        $mf->pay_date = date('Y-m-d');
+        $mf->pay_method = $request->pay_method;
+        $mf->given_to = Auth::id();
 
+       if($request->pay_method =="CHEQUE") {
+        $mf->status = "unverified";
+        $cheque = new Cheque;
+        $cheque->number = $request->cheque_number;
+        $cheque->amount = $request->paid_amount;
+        $cheque->cheque_date = $request->cheque_date;
+        $cheque->added_date = date('Y-m-d');
+        $cheque->save();
+        $mf->cheque_id = $cheque->id;
+       } else {
+        $mf->status = "success";
+       }
+       $mf->save();
+       return redirect()->route('LHMembershipCollectionView')->with('status', 'Success! Fee Collection Added');
     }
-    public function ChequeStatus() {
-
+    public function MembershipVerify(Request $request) {
+        $request->validate([
+            "fees_id" => "required|exists:membership_fees,id",
+            "status" => "required|in:success,reject"
+        ]);
+        $mf = MembershipFees::find($request->fees_id);
+        if($request->status == "success") {
+            $mf->status = "success";
+            if($mf->pay_method == "CHEQUE") {
+            $cheque = Cheque::find($mf->cheque_id);
+            $cheque->status = 1;
+            $cheque->save();
+            }
+        } else {
+            $mf->status = "pending";
+        }
+        $mf->save();
+        return redirect()->back();
+    }
+    public function pay_membership_form() {
+        $bool = false;
+        $mf_ = MembershipFees::where([
+            "member_id" => Auth::id(),
+            "fees_month" => date('m'),
+            "fees_year" => date('Y')
+        ])->first();
+        if($mf_ != null)
+        $bool = true;
+        return view('Membership.PayMembership', ['bool' => $bool]);
+    }
+    public function pay_membership(Request $request) {
+        $request->validate([
+            "pay_method" => "required|in:TRANSFER,ONLINE",
+            "receipt" => "required_if:pay_method,TRANSFER|nullable|image|min:2|max:20000"
+        ]);
+        if($request->hasFile('receipt')) {
+            $extn = $request->file('receipt')->getClientOriginalExtension();
+            $receipt = md5(str_random(20).time()) . '.' .$extn;
+            $request->file('receipt')->storeAs(
+                'receipts', $receipt
+            );
+        }
+        $mf = new MembershipFees;
+        $mf->member_id = Auth::id();
+        $mf->fees_amount = 1000;
+        $mf->paid_amount = 1000;
+        $mf->fees_month = date('m');
+        $mf->fees_year = date('Y');
+        $mf->pay_date = date('Y-m-d');
+        $mf->pay_method = $request->pay_method;
+        if($request->pay_method == "TRANSFER") {
+            $mf->status = "unverified";
+            $mf->receipt_file = $receipt;
+            $mf->save();
+            return redirect()->route('MembershipDetails');
+        } else {
+            //$txn = new PAYUMONEY;
+            $mf->status = null;
+            $mf->txn_id = "0";//$txn->id;
+            $mf->save();
+            return "Redirect to PayUMoney";
+        }
     }
     public function TransferReceiptUploadForm() {
 

@@ -3,7 +3,11 @@
 <main class="main-content p-4 invisible" data-qp-animate-type="fadeIn" data-qp-animate-delay="600" role="main">
 <div class="row">
 <div class="col-md-12">
+@if(!empty($cheque))
+<h1 style="text-align: center">Cheque Status</h1>
+@else
 <h1 style="text-align: center">Fee Collection Form</h1>
+@endif
 </div>
 </div>
 <div class="row mb-4">
@@ -17,6 +21,11 @@
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+        </div>
+        @endif
+        @if (session('e_message'))
+        <div class="alert alert-danger">
+            {{ session('e_message') }}
         </div>
         @endif
     <div class="row">
@@ -34,8 +43,8 @@
                 <div class="form-group">
                     <label for="pay_method" class="active">Payment Method</label>
                     <select class="form-control" name="pay_method" id="pay_method">
-                        <option>CASH</option>
-                        <option>CHEQUE</option>
+                        <option{{ (old('pay_method') == "CASH")?' selected':''}}>CASH</option>
+                        <option{{ (old('pay_method') == "CHEQUE")?' selected':''}}>CHEQUE</option>
                     </select>
                 </div>
                 </div>

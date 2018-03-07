@@ -1,7 +1,7 @@
 <nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
         <ul class="nav nav-pills flex-column invisible" data-qp-animate-type="fadeInLeft">
             <li class="logo-nav-item">
-                <a class="navbar-brand" href="index.php">
+                <a class="navbar-brand" href="#">
                     <img src="{{ asset('img/photo.jpg') }}">
                 </a>
     
@@ -10,7 +10,7 @@
                 <h6 class="nav-header">General</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-browser-alt"></i>
                     Dashboard 
                 </a>
@@ -59,32 +59,32 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="nominee-table.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Nominee Registration
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="deposit-approval.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Deposit Approval
                 </a>
             </li>
     
             <li class="nav-item">
-                <a class="nav-link" href="card-table.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     I-Card
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="income-expense.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Income & Expense Details
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="balance-sheet.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Balance Sheet
                 </a>
@@ -96,31 +96,31 @@
                 </a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="loan-approval.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Loan Approval
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="loan-given.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Loan Given
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="loan-detail.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Loan Repayment Detail
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="certificate.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-compose-alt-2"></i>
                     Loan Clearence Certificate
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pending-loan-priority.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Pending Loan Priority
                 </a>
@@ -132,49 +132,55 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="fund-with-him.php">
+                <a class="nav-link{{(request()->route()->getName() == 'MembershipDetails') ? ' active' : ''}}" href="{{ route('MembershipDetails') }}">
+                    <i class="batch-icon batch-icon-star"></i>
+                    Membership Details
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Funds With Me
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="deposit-fund.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Deposit Fund
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="expenses.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Expenses
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="income.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Income
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="member-cancel-table.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     MemberShip Cancellation
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="requesting-help.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Acknowledge Help
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="grevence-form.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Grevence Form
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="receipt.php">
+                <a class="nav-link" href="#">
                     <i class="batch-icon batch-icon-star"></i>
                     Receipt
                 </a>

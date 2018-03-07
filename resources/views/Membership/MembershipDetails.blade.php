@@ -75,8 +75,11 @@
                 <td>
                 <?php
                 if(!$member->membership_fees->isEmpty()) {
-                    if($member->membership_fees[0]->pay_method == "CASH" || $member->membership_fees[0]->pay_method == "CHEQUE")
+                    if($member->membership_fees[0]->pay_method == "CASH")
                     echo $member->membership_fees[0]->pay_method. "<br>(" .$member->membership_fees[0]->paid_to->name. ")";
+                    elseif ($member->membership_fees[0]->pay_method == "CHEQUE") {
+                    echo $member->membership_fees[0]->pay_method. " [ " .$member->membership_fees[0]->cheque_detail->number. " ]<br>( " .$member->membership_fees[0]->paid_to->name. " )";
+                    }
                     elseif($member->membership_fees[0]->pay_method == "TRANSFER")
                     echo $member->membership_fees[0]->pay_method. "<br>(<a href='" .asset('receipts/'.$member->membership_fees[0]->receipt_file). "' target='_blank'>Receipt</a>)";
                     else
@@ -87,24 +90,37 @@
                 ?>
                 </td>
                 <td>{{(!$member->membership_fees->isEmpty())?$member->membership_fees[0]->paid_amount:'-'}}</td>
-                <td>{{(!$member->membership_fees->isEmpty())?$member->membership_fees[0]->status:'-'}}</td>
-                <?php /*
+                <td>
+                <?php
                 if(!$member->membership_fees->isEmpty()) {
-                    echo $member->membership_fees[0]->status;
-                    if(($member->membership_fees[0]->pay_method == "TRANSFER" || $member->membership_fees[0]->pay_method == "CHEQUE") && $member->membership_fees[0]->status == "unverified") {
+                    if(($member->membership_fees[0]->pay_method == "TRANSFER" || $member->membership_fees[0]->pay_method == "CHEQUE") && $member->membership_fees[0]->status == "unverified" && (session('mode') == "corecommittee" || session('mode') == "president")){
+                        echo $member->membership_fees[0]->status;
                 ?>
-                <br>(<a href="#" onclick="event.preventDefault();
-                document.getElementById('verify_form{{$member->membership_fees[0]->id}}').submit();">Verify</a>)
-                <form id="verify_form{{$member->membership_fees[0]->id}}" action="{{ route('VerifyTransfer') }}" method="POST" style="display: none;">
+                <br>(<?php if($member->membership_fees[0]->pay_method == "TRANSFER") { ?>
+                <a href="#" onclick="event.preventDefault();
+                document.getElementById('verify_form{{$member->membership_fees[0]->id}}').submit();">Verify</a>
+                <?php } else { ?>
+                    <a href="#" onclick="event.preventDefault();
+                document.getElementById('verify_form{{$member->membership_fees[0]->id}}').submit();">Clear</a> / <a href="#" onclick="event.preventDefault();
+                document.getElementById('reject_form{{$member->membership_fees[0]->id}}').submit();">Reject</a>
+                <?php } ?>)
+                <form id="verify_form{{$member->membership_fees[0]->id}}" action="{{ route('MembershipVerify') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                     <input type="hidden" name="fees_id" value="{{$member->membership_fees[0]->id}}">
+                    <input type="hidden" name="status" value="success">
+                </form>
+                <form id="reject_form{{$member->membership_fees[0]->id}}" action="{{ route('MembershipVerify') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="fees_id" value="{{$member->membership_fees[0]->id}}">
+                    <input type="hidden" name="status" value="reject">
                 </form>
                 <?php
-                    }
+                    } else echo $member->membership_fees[0]->status;
                 } else {
                     echo "-";
-                }*/
+                }
                 ?>
+                </td>
             </tr>
             @endforeach
         </tbody>

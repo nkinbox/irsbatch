@@ -1,7 +1,7 @@
 <nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
 <ul class="nav nav-pills flex-column invisible" data-qp-animate-type="fadeInLeft">
     <li class="logo-nav-item">
-        <a class="navbar-brand" href="index.php">
+        <a class="navbar-brand" href="#">
             <img src="{{ asset('img/photo.jpg') }}">
         </a>
 
@@ -10,7 +10,7 @@
         <h6 class="nav-header">General</h6>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-browser-alt"></i>
             Dashboard 
         </a>
@@ -28,19 +28,19 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="loan-detail.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Loan Repayment Detail
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="certificate.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Loan Clearence Certificate
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="fund-with-him.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Fund With Lobby Head
         </a>
@@ -53,31 +53,31 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="fund-in-bank.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Fund In Bank
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="income-expense.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Income & Expense Statment
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="deposit-approval.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Deposit Approval
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="balance-sheet.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Balance Sheet
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="toatal-fund.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Total Fund With Society
         </a>
@@ -95,13 +95,13 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="i-card-table.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             I-Card
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="loan-approval.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Loan Approval
         </a>
@@ -113,37 +113,37 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="requesting-help.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Approval Of Help
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="grevence-form.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Greveience & Suggestion Approval
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="income.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Income
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="expenses.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Expense
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="pending-loan-priority.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Pending Loan Priority
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="member-cancel-table.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             MemberShip Cancellation Request
         </a>
@@ -155,7 +155,7 @@
         </a>
     </li> -->
     <li class="nav-item">
-        <a class="nav-link" href="loan-given.php">
+        <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Loan Given
         </a>
