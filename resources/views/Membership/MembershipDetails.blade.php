@@ -115,6 +115,8 @@
                     <input type="hidden" name="status" value="reject">
                 </form>
                 <?php
+                    } elseif($member->membership_fees[0]->pay_method == "TRANSFER" || $member->membership_fees[0]->pay_method == "CHEQUE"){
+                        echo $member->membership_fees[0]->status. "<br>( " .$member->membership_fees[0]->verifier->name. " )";
                     } else echo $member->membership_fees[0]->status;
                 } else {
                     echo "-";

@@ -19,7 +19,10 @@ class MembershipFees extends Model
         "ecs_id",
     ];
     public function paid_to() {
-        return $this->hasOne('App\Models\User', 'id', 'given_to')->select('name');
+        return $this->hasOne('App\Models\User', 'id', 'given_to')->select('id', 'name');
+    }
+    public function verifier() {
+        return $this->hasOne('App\Models\User', 'id', 'verified_by')->select('id', 'name');
     }
     public function member_detail() {
         return $this->hasOne('App\Models\User', 'id', 'member_id');

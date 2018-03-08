@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administration;
+namespace App\Http\Controllers\API\Administration;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,10 +13,10 @@ class MembershipController extends Controller
 {
     public function MembershipDetails(Request $request) {
         $user = Auth::user();
-        if($user->position_id == 11 && session('mode') == "lobbyhead") {
+        if($user->position_id == 11 && $request->mode == "lobbyhead") {
         $where = ['membership' => 1, 'hq' => $user->hq];
         }
-        elseif(session('mode') == "member")
+        elseif($request->mode == "member")
         $where = ['id' => $user->id, 'membership' => 1];
         else
         $where = ['membership' => 1];
@@ -25,10 +25,10 @@ class MembershipController extends Controller
         else
         $binding = [date('m'),date('Y')];
         $members = User::where($where)->with(['membership_fees'=>function($query) use ($binding){
-            $query->whereRaw("fees_month = ? and fees_year = ?", $binding);
+            $query->whereRaw("fees_month = ? and fees_year = ?", $binding)->with('paid_to')->with('verifier')->with('cheque_detail');
         }])->get();
         //dd($members);
-        return view('Membership.MembershipDetails', ['members' => $members, 'month' => $request->month, 'year' => $request->year]);
+        return response()->json(['success' => '1', 'members' => $members, 'month' => $request->month, 'year' => $request->year]);
     }
     public function LHMembershipCollectionForm() {
         return view('Membership.MembershipCollectionForm');
@@ -43,7 +43,7 @@ class MembershipController extends Controller
             $year = date('Y');
         }
         $fees = MembershipFees::where('given_to', $id)->whereMonth('pay_date', $month)->whereYear('pay_date', $year)->with('member_detail')->get();
-        return view('Membership.MembershipCollectionView', ['fees_' => $fees, 'month' => $request->month, 'year' => $request->year]);
+        return response()->json(['success' => '1', 'fees' => $fees, 'month' => $request->month, 'year' => $request->year]);
     }
     public function LHMembershipCollection(Request $request) {
         $request->validate([
@@ -59,8 +59,12 @@ class MembershipController extends Controller
             "fees_month" => date('m'),
             "fees_year" => date('Y')
         ])->first();
-        if($mf_ != null)
-        return redirect()->back()->with('e_message', 'Membership Fees Already Paid By '.$request->membership_code);
+        if($mf_ != null) {
+            return response()->json([
+                "success" => "0",
+                "message" => 'Membership Fees Already Paid By '.$request->membership_code
+            ]);
+        }
         $mf = new MembershipFees;
         $mf->member_id = $member->id;
         $mf->fees_amount = $request->paid_amount;
@@ -84,7 +88,10 @@ class MembershipController extends Controller
         $mf->status = "success";
        }
        $mf->save();
-       return redirect()->route('LHMembershipCollectionView')->with('status', 'Success! Fee Collection Added');
+       return response()->json([
+           "success" => "1",
+           "message" => "Success! Fee Collection Added"
+       ]);
     }
     public function MembershipVerify(Request $request) {
         $request->validate([
@@ -104,7 +111,10 @@ class MembershipController extends Controller
             $mf->status = "pending";
         }
         $mf->save();
-        return redirect()->back();
+        return response()->json([
+            "success" => "1",
+            "message" => "Verified Successfully."
+        ]);
     }
     public function pay_membership_form() {
         $bool = false;
