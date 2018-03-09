@@ -15,7 +15,7 @@ class AdmissionController extends Controller
         $membership_code = null;
         if(count($members) > 0)
         $membership_code = $this->assign_membership_code($members[0]->applied_on);
-        return response()->json(['members' => $members, 'membership_code' => $membership_code]);
+        return response()->json(['success' => 1, 'members' => $members, 'membership_code' => $membership_code]);
     }
     public function SignUp(Request $request) {
         $request->validate([
