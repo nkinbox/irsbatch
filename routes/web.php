@@ -52,6 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/membership/collection', 'Administration\MembershipController@LHMembershipCollection')->name('LHMembershipCollection');
     Route::get('/membership/pay', 'Administration\MembershipController@pay_membership_form')->name('PayMembershipForm');
     Route::post('/membership/pay', 'Administration\MembershipController@pay_membership')->name('PayMembership');
+
+
+
+    Route::get('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
+    Route::post('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
 });
 
 

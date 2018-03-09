@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Documents;
 use App\Rules\document;
+use App\Models\MembershipCancellation;
+use Auth;
 
 class AdmissionController extends Controller
 {
@@ -269,5 +271,46 @@ class AdmissionController extends Controller
             $code = $year.'D'.$count;
         }
         return $code;
+    }
+    public function Cancel(Request $request) {
+        if(empty($request->all())) {
+            return view('Member.Cancel');
+        } else {
+            $request->validate([
+                "reason" => "required|string|min:10|max:2500",
+                "signature" => "required|image|min:2|max:2000",
+                "letter" => "required|file|mimetypes:application/pdf"
+            ]);
+            $mc = MembershipCancellation::where([
+                'member_id' => Auth::id(),
+                'status' => 'pending'
+                ])->first();
+            if($mc != null) {
+                return redirect()->route('MembershipCancellation')->with('e_message', 'Cancellation Already Submitted.');
+            }
+            $signature = null;
+            if($request->hasFile('signature')) {
+                $extn = $request->file('signature')->getClientOriginalExtension();
+                $signature = md5(str_random(20).time()) . '.' .$extn;
+                $request->file('signature')->storeAs(
+                    'signature', $signature
+                );
+            }
+            $letter = null;
+            if($request->hasFile('letter')) {
+                $extn = $request->file('letter')->getClientOriginalExtension();
+                $letter = md5(str_random(20).time()) . '.' .$extn;
+                $request->file('letter')->storeAs(
+                    'documents', $letter
+                );
+            }
+            $mc = new MembershipCancellation;
+            $mc->member_id = Auth::id();
+            $mc->reason = $request->reason;
+            $mc->signature = $signature;
+            $mc->letter = $letter;
+            $mc->save();
+            return redirect()->route('MembershipCancellation')->with('message', 'Membership Cancellation Request Sent Successfully.');
+        }
     }
 }

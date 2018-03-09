@@ -24,7 +24,7 @@
         <p class="lead" style="font-weight: bold">
             Member Details
         </p>
-        <form  action="{{route('EditMember')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('EditMember')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <input type="hidden" name="id" value="{{$member->id}}">
             <div class="row">

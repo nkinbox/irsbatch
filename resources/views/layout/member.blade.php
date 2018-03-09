@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'profile') ? ' active' : ''}}" href="{{ route('profile') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Profile
             </a>
@@ -36,17 +36,18 @@
                 Loan Form
             </a>
         </li>
-        <li class="nav-item">
-                <a class="nav-link{{(request()->route()->getName() == 'ShowOfficeBearer') ? ' active' : ''}}" href="{{ route('ShowOfficeBearer') }}">
-                <i class="batch-icon batch-icon-compose-alt-2"></i>
-                Office Bearers
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="batch-icon batch-icon-star"></i>
                 Loan Repayment Detail
+            </a>
+        </li>
+
+        <li class="nav-item">
+                <a class="nav-link{{(request()->route()->getName() == 'ShowOfficeBearer') ? ' active' : ''}}" href="{{ route('ShowOfficeBearer') }}">
+                <i class="batch-icon batch-icon-compose-alt-2"></i>
+                Office Bearers
             </a>
         </li>
 
@@ -77,15 +78,15 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'NomineeEditForm') ? ' active' : ''}}" href="{{ route('NomineeEditForm') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Nominee Registration
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'MembershipCancellation') ? ' active' : ''}}" href="{{ route('MembershipCancellation') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                MemberShip Cancellation
+                Membership Cancellation
             </a>
         </li>
         <li class="nav-item">
