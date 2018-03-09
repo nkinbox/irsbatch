@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
     Route::post('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
+    Route::get('/cancellation/view', 'Member\AdmissionController@CancellationList')->name('CancellationList');
 });
 
 

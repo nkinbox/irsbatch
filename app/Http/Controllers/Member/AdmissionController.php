@@ -313,4 +313,13 @@ class AdmissionController extends Controller
             return redirect()->route('MembershipCancellation')->with('message', 'Membership Cancellation Request Sent Successfully.');
         }
     }
+    public function CancellationList() {/*
+        $cancellationList = MembershipCancellation::whereIn('status', ['pending', 'hold'])
+        ->with(['member_detail' => function($query) use () {
+            $query->
+        }])
+        ->with('lobbyhead_detail')
+        ->with('corecommittee_detail')->get();*/
+        return view('Administration.CancellationList', ['list' => $cancellationList]);
+    }
 }

@@ -162,9 +162,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                    <a class="nav-link{{(request()->route()->getName() == 'CancellationList') ? ' active' : ''}}" href="{{ route('CancellationList') }}">
                     <i class="batch-icon batch-icon-star"></i>
-                    MemberShip Cancellation
+                    Membership Cancellation
                 </a>
             </li>
             <li class="nav-item">
