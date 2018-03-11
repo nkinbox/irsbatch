@@ -48,6 +48,56 @@ $(document).ready(function() {
         var i = $("#docsContainer").children().length;
         $("#docsContainer").append('<div class="col-md-3" style="padding-top:2em"><div class="form-group"><label class="active">Document Name</label><input type="text"  class="form-control" name="docs_name[' + i + ']" placeholder="Document Name" required><input type="file"  class="form-control" name="docs[' + i + '][]" multiple required></div></div>');
     });
+    $("#loan_range").on('change', function(){
+        var i, j = 0;
+        switch (this.value) {
+            case "1":
+                j = 5;
+                break;
+            case "2":
+                j = 10;
+                break;
+            case "3":
+                j = 12;
+                break;
+            case "4":
+                j = 15;
+                break;
+            case "5":
+                j = 20;
+                break;
+            case "6":
+                j = 25;
+        }
+        $("#ChequeContainer").html("");
+        for(i = 1; i <= j; i++)
+        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number" required></div></div>');
+    });
+    $("#loan_range1").on('change', function(){
+        var i, j = 0;
+        switch (this.value) {
+            case "1":
+                j = 5;
+                break;
+            case "2":
+                j = 10;
+                break;
+            case "3":
+                j = 12;
+                break;
+            case "4":
+                j = 15;
+                break;
+            case "5":
+                j = 20;
+                break;
+            case "6":
+                j = 25;
+        }
+        $("#ChequeContainer").html("");
+        for(i = 1; i <= j; i++)
+        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number" required><input type="date" name="cheque_date['+ i +']" class="form-control" required><input type="number" name="cheque_amount['+ i +']" class="form-control" placeholder="Cheque Amount" required></div></div>');
+    });
     var address = document.getElementById("Address");
     var len_of_address=0;
     if(address != undefined) {

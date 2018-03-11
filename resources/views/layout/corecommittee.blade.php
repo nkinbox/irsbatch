@@ -113,7 +113,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'HelpList') ? ' active' : ''}}" href="{{ route('HelpList') }}">
             <i class="batch-icon batch-icon-star"></i>
             Approval Of Help
         </a>

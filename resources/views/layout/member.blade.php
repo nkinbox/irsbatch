@@ -31,7 +31,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+                <a class="nav-link{{(request()->route()->getName() == 'LoanForm') ? ' active' : ''}}" href="{{ route('LoanForm') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Loan Form
             </a>
@@ -43,7 +43,12 @@
                 Loan Repayment Detail
             </a>
         </li>
-
+        <li class="nav-item">
+                <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
+                <i class="batch-icon batch-icon-star"></i>
+                Pending Loan Priority
+            </a>
+        </li>
         <li class="nav-item">
                 <a class="nav-link{{(request()->route()->getName() == 'ShowOfficeBearer') ? ' active' : ''}}" href="{{ route('ShowOfficeBearer') }}">
                 <i class="batch-icon batch-icon-compose-alt-2"></i>
@@ -71,12 +76,6 @@
                 Receipts
             </a>
         </li-->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="batch-icon batch-icon-star"></i>
-                Pending Loan Priority
-            </a>
-        </li>
         <li class="nav-item">
             <a class="nav-link{{(request()->route()->getName() == 'NomineeEditForm') ? ' active' : ''}}" href="{{ route('NomineeEditForm') }}">
                 <i class="batch-icon batch-icon-star"></i>

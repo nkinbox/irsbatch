@@ -35,6 +35,6 @@ class SwitchMode extends Controller
             $mode = "member";
         }
         session(["mode" => $mode]);
-        return redirect()->back();
+        return redirect()->route('home');
     }
 }

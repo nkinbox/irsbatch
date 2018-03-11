@@ -67,10 +67,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/help_list', 'Administration\HelpController@HelpList')->name('HelpList');
     Route::get('/help', 'Administration\HelpController@getHelpForm')->name('GetHelp');
     Route::post('/help', 'Administration\HelpController@getHelp')->name('GetHelp');
+    Route::post('/help_action', 'Administration\HelpController@HelpAction')->name('HelpAction');
+    Route::get('/loan_form', 'Administration\LoanController@LoanForm')->name('LoanForm');
+    Route::post('/loan_form', 'Administration\LoanController@AddLoan')->name('AddLoan');
+    Route::get('/loan_priority', 'Administration\LoanController@LoanPriority')->name('LoanPriority');
+    Route::get('/collect_cheque', 'Administration\LoanController@ChequeCollectionForm')->name('ChequeCollectionForm');
+    Route::post('/collect_cheque', 'Administration\LoanController@ChequeCollection')->name('ChequeCollection');
+    Route::get('/loan_request', 'Administration\LoanController@LoanRequest')->name('LoanRequest');
 });
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home'); //required in switchmode
 Route::get('/', function () {
     return redirect('/login');
 });
