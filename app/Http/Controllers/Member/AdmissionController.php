@@ -313,13 +313,47 @@ class AdmissionController extends Controller
             return redirect()->route('MembershipCancellation')->with('message', 'Membership Cancellation Request Sent Successfully.');
         }
     }
-    public function CancellationList() {/*
-        $cancellationList = MembershipCancellation::whereIn('status', ['pending', 'hold'])
-        ->with(['member_detail' => function($query) use () {
-            $query->
-        }])
-        ->with('lobbyhead_detail')
-        ->with('corecommittee_detail')->get();*/
+    public function CancellationList() {
+        $user = Auth::user();
+        //dd($user);
+        if($user->position_id == 11) {
+            $cancellationList = MembershipCancellation::whereIn('status', ['pending', 'hold'])
+            ->where('lobbyhead', null)
+            ->whereHas('member_detail', function ($query) use ($user) {
+                $query->where('hq', $user->hq);
+            })
+            ->with(['member_detail', 'lobbyhead_detail', 'corecommittee_detail'])->get();
+        } else {
+            $cancellationList = MembershipCancellation::whereIn('status', ['pending', 'hold'])
+            ->where("lobbyhead", "!=", null)
+            ->with(['member_detail', 'lobbyhead_detail', 'corecommittee_detail'])->get();
+        }
+        //dd($cancellationList);
         return view('Administration.CancellationList', ['list' => $cancellationList]);
+    }
+    public function CancellationStatus(Request $request) {
+        $request->validate([
+            "cancel_id" => "required|exists:membership_cancellations,id",
+            "lobbyhead" => "required|boolean",
+            "status" => "required|in:declined,approved,hold,pending"
+        ]);
+        if($request->lobbyhead) {
+            $cancel = MembershipCancellation::find($request->cancel_id);
+            $cancel->lobbyhead = Auth::id();
+            $cancel->status = $request->status;
+            $cancel->save();
+        } else {
+            $cancel = MembershipCancellation::find($request->cancel_id);
+            $cancel->corecommittee = Auth::id();
+            $cancel->status = $request->status;
+            $cancel->save();
+            if($request->status == "approved") {
+                $user = User::find($cancel->member_id);
+                $user->membership = 0;
+                $user->membership_status = "suspended";
+                $user->save();
+            }
+        }
+        return redirect()->back();
     }
 }

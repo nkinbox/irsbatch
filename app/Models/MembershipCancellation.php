@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class MembershipCancellation extends Model
 {
     public function member_detail() {
-        return $this->hasOne('App\Models\MembershipCancelation', 'id', 'member_id');
+        return $this->hasOne('App\Models\User', 'id', 'member_id');
     }
     public function lobbyhead_detail() {
-        return $this->hasOne('App\Models\MembershipCancelation', 'id', 'lobbyhead');
+        return $this->hasOne('App\Models\User', 'id', 'lobbyhead');
     }
     public function corecommittee_detail() {
-        return $this->hasOne('App\Models\MembershipCancelation', 'id', 'corecommittee');
+        return $this->hasOne('App\Models\User', 'id', 'corecommittee');
     }
 }

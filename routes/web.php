@@ -58,6 +58,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
     Route::post('/cancel', 'Member\AdmissionController@Cancel')->name('MembershipCancellation');
     Route::get('/cancellation/view', 'Member\AdmissionController@CancellationList')->name('CancellationList');
+    Route::post('/cancellation', 'Member\AdmissionController@CancellationStatus')->name('CancellationStatus');
+    Route::get('/grievance', 'Administration\GrievanceController@all')->name('Grievance');
+    Route::get('/grievance_member', 'Administration\GrievanceController@addView')->name('GrievanceMember');
+    Route::post('/grievance_member', 'Administration\GrievanceController@add')->name('GrievanceMember');
+    Route::get('/grievance/view/{id}', 'Administration\GrievanceController@show')->name('GrievanceShow');
+    Route::post('/grievance', 'Administration\GrievanceController@action')->name('GrievanceAction');
+    Route::get('/help_list', 'Administration\HelpController@HelpList')->name('HelpList');
+    Route::get('/help', 'Administration\HelpController@getHelpForm')->name('GetHelp');
+    Route::post('/help', 'Administration\HelpController@getHelp')->name('GetHelp');
 });
 
 

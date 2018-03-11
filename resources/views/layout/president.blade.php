@@ -174,9 +174,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                    <a class="nav-link{{(request()->route()->getName() == 'Grievance') ? ' active' : ''}}" href="{{ route('Grievance') }}">
                     <i class="batch-icon batch-icon-star"></i>
-                    Grevence Form
+                    Grievance Approval
                 </a>
             </li>
             <li class="nav-item">

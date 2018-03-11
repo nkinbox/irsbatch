@@ -22,7 +22,7 @@
                         @if(!$member->membership)
                         <div><code>Membership INACTIVE</code></div>
                         @else
-                        <h5>{{ $member->position->position }}</h5>
+                        <h5>{{ ($member->position_id == 0)?'Member':$member->position->position }}</h5>
                         <h6>{{$member->membership_code}}</h6>
                         @if($member->introduced_by)
                         <div><br>                         

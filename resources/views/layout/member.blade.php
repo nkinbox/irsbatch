@@ -59,18 +59,18 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+                <a class="nav-link{{(request()->route()->getName() == 'Grievance') ? ' active' : ''}}" href="{{ route('Grievance') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                Grevience & Suggestion
+                Grievance / Suggestion
             </a>
         </li>
 
-        <li class="nav-item">
+        <!--li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="batch-icon batch-icon-star"></i>
                 Receipts
             </a>
-        </li>
+        </li-->
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="batch-icon batch-icon-star"></i>
@@ -90,15 +90,10 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+                <a class="nav-link{{(request()->route()->getName() == 'HelpList') ? ' active' : ''}}" href="{{ route('HelpList') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Need Help
             </a>
         </li>
-
-        
-
     </ul>
-
-    
 </nav>
