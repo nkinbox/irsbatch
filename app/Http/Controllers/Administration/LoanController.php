@@ -41,8 +41,8 @@ class LoanController extends Controller
         $request->validate([
             "loan_type" => "required|in:Normal,Emergency",
             "amount" => "required|numeric|".$validation,
-            "cheque_number" => "required|size:".$size,
-            "cheque_number.*" => "required|numeric|distinct|digits:6"
+            "cheque_number" => "required|max:".$size,
+            "cheque_number.*" => "nullable|numeric|distinct"
         ]);
 
         $loan = new Loan;
@@ -53,12 +53,14 @@ class LoanController extends Controller
         $loan->save();
         $cheques = [];
         foreach($request->cheque_number as $number) {
+            if($number != null) {
             $cheques[] = [
                 "loan_id" => $loan->id,
                 "number" => $number,
                 "amount" => 0,
                 "used_for" => "repayment"
             ];
+            }
         }
         Cheque::insert($cheques);
         return redirect()->route('LoanPriority');

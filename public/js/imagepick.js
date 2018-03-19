@@ -71,7 +71,7 @@ $(document).ready(function() {
         }
         $("#ChequeContainer").html("");
         for(i = 1; i <= j; i++)
-        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number" required></div></div>');
+        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number"></div></div>');
     });
     $("#loan_range1").on('change', function(){
         var i, j = 0;
@@ -96,7 +96,7 @@ $(document).ready(function() {
         }
         $("#ChequeContainer").html("");
         for(i = 1; i <= j; i++)
-        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number" required><input type="date" name="cheque_date['+ i +']" class="form-control" required><input type="number" name="cheque_amount['+ i +']" class="form-control" placeholder="Cheque Amount" required></div></div>');
+        $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ i +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number"><input type="date" name="cheque_date['+ i +']" class="form-control"><input type="number" name="cheque_amount['+ i +']" class="form-control" placeholder="Cheque Amount"></div></div>');
     });
     var address = document.getElementById("Address");
     var len_of_address=0;
