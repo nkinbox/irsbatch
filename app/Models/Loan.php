@@ -14,6 +14,6 @@ class Loan extends Model
         return $this->hasMany('App\Models\Cheque', 'loan_id', 'id')->where('used_for', 'loan');
     }
     public function member_detail() {
-        return $this->hasMany('App\Models\User', 'id', 'member_id');
+        return $this->hasOne('App\Models\User', 'id', 'member_id');
     }
 }

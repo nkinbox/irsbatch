@@ -41,7 +41,7 @@ class LoanController extends Controller
         $request->validate([
             "loan_type" => "required|in:Normal,Emergency",
             "amount" => "required|numeric|".$validation,
-            "cheque_number" => "required|max:".$size,
+            "cheque_number" => "required|min:1|max:".$size,
             "cheque_number.*" => "nullable|numeric|distinct"
         ]);
 
@@ -101,15 +101,23 @@ class LoanController extends Controller
         $request->validate([
             "loan_type" => "required|in:".$loan->loan_type,
             "amount" => "required|numeric|in:".$loan->amount,
-            "cheque_number" => "required|size:".$size,
-            "cheque_amount" => "required|size:".$size,
-            "cheque_date" => "required|size:".$size,
-            "cheque_number.*" => "required|numeric|distinct|digits:6|in:".$cheques,
-            "cheque_amount.*" => "required|numeric",
-            "cheque_date.*" => "required|date"
+            "cheque_number" => "required|min:1|max:".$size,
+            "cheque_number.*" => "nullable|numeric|distinct|digits:6|in:".$cheques,
         ]);
-
-        $loan->status = "Priority";
+        $i = 0;
+        $rule = [];
+        foreach($request->cheque_number as $number) {
+            if($number != null) {
+            $temp_rule = [
+                "cheque_amount.".$i => "required_with:cheque_number." .$i. "|numeric",
+                "cheque_date.".$i => "required_with:cheque_number." .$i. "|date"
+            ];
+            $rule = array_merge($rule, $temp_rule);
+            }
+            $i++;
+        }
+        $request->validate($rule);
+        $loan->status = "Pending";
         $loan->save();
         foreach($request->cheque_number as $i => $number) {
             $where = [
@@ -125,11 +133,19 @@ class LoanController extends Controller
         }
         return redirect()->route('LoanRequest');
     }
-    public function LoanPriority() {
-        return "hi";
+    public function LoanPriority(Request $request) {
+        $request->validate([
+            "loan_id" => "required|numeric|exists:loans,id",
+            "status" => "required|in:Rejected,Priority"
+        ]);
+        $loan = Loan::find($request->loan_id);
+        $loan->status = $request->status;
+        $loan->save();  //working on this line
+        return $request;
     }
     public function LoanRequest() {
-        $loans = Loan::where('status', 'Pending')->with('member_detail')->get();
+        $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
+        //dd($loans->toArray());
         return view('Loan.LHLoanApproval', ['loans' => $loans]);
     }
 }

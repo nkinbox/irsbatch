@@ -21,7 +21,6 @@
                     <th>Membership Code</th>
                     <th>Loan Request(Amount)</th>
                     <th>No of Cheques Received</th>
-                    <!-- <th>Received</th> -->
                     <th>Date</th>
                     <th>Loan Form No</th>
                     <th>Action</th>
@@ -34,13 +33,23 @@
                     <th scope="row"><?php echo ++$i; ?></th>
                     <td>{{ $loan->member_detail->name }}</td>
                     <td>{{ $loan->member_detail->membership_code }}</td>
-                    <td>34235345</td>
-                    <!-- <td>8527439091</td> -->
-                    <td>8527439091</td>
-                    <td>8527439091</td>
-                    <td>8527439091</td>
-                    <td><a href="#">Approve</a>/<a href="#">Decline</a></td>
-
+                    <td>{{ $loan->amount }}</td>
+                    <td>{{ count($loan->repayment_cheques) }}</td>
+                    <td>{{ $loan->applied_on }}</td>
+                    <td>{{ $loan->id }}</td>
+                    <td><a href="#" onclick="event.preventDefault();
+                        document.getElementById('approve_form{{$loan->id}}').submit();">Approve</a> / <a href="#" onclick="event.preventDefault();
+                        document.getElementById('decline_form{{$loan->id}}').submit();">Decline</a></td>
+                    <form id="approve_form{{$loan->id}}" action="{{ route('LoanPriority') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
+                        <input type="hidden" name="status" value="Priority">
+                    </form>
+                    <form id="decline_form{{$loan->id}}" action="{{ route('LoanPriority') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
+                        <input type="hidden" name="status" value="Rejected">
+                    </form>
                 </tr>
             @endforeach
             </tbody>
