@@ -140,8 +140,13 @@ class LoanController extends Controller
         ]);
         $loan = Loan::find($request->loan_id);
         $loan->status = $request->status;
-        $loan->save();  //working on this line
-        return $request;
+        $loan->save();
+        return redirect()->back();
+    }
+    public function LoanPriorityView() {
+        $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
+        //dd($loans->toArray());
+        return view('Loan.LoanPriority', ['loans' => $loans]); 
     }
     public function LoanRequest() {
         $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
