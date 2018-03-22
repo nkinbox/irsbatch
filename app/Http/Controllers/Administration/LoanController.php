@@ -144,7 +144,7 @@ class LoanController extends Controller
         return redirect()->back();
     }
     public function LoanPriorityView() {
-        $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
+        $loans = Loan::where('status', 'Priority')->with(['member_detail', 'repayment_cheques'])->get();
         //dd($loans->toArray());
         return view('Loan.LoanPriority', ['loans' => $loans]); 
     }

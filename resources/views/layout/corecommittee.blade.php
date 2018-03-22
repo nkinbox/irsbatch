@@ -101,12 +101,6 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="batch-icon batch-icon-star"></i>
-            Loan Approval
-        </a>
-    </li>
-    <li class="nav-item">
             <a class="nav-link{{(request()->route()->getName() == 'PendingApprovals') ? ' active' : ''}}" href="{{ route('PendingApprovals') }}">
             <i class="batch-icon batch-icon-star"></i>
             Admission Approval
@@ -137,9 +131,9 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="batch-icon batch-icon-star"></i>
-            Pending Loan Priority
+        <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
+        <i class="batch-icon batch-icon-star"></i>
+        Pending Loan Priority
         </a>
     </li>
     <li class="nav-item">
