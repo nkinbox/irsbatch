@@ -19,7 +19,9 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Membership Code</th>
+                    <th>HQ</th>
                     <th>Loan Request(Amount)</th>
+                    <th>Loan Type</th>
                     <th>No of Cheques Received</th>
                     <th>Date</th>
                     <th>Loan Form No</th>
@@ -33,7 +35,9 @@
                     <th scope="row"><?php echo ++$i; ?></th>
                     <td>{{ $loan->member_detail->name }}</td>
                     <td>{{ $loan->member_detail->membership_code }}</td>
+                    <td>{{ $loan->member_detail->hq }}</td>
                     <td>{{ $loan->amount }}</td>
+                    <td>{{ $loan->loan_type }}</td>
                     <td>{{ count($loan->repayment_cheques) }}</td>
                     <td>{{ $loan->applied_on }}</td>
                     <td>{{ $loan->id }}</td>

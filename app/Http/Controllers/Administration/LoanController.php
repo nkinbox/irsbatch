@@ -153,4 +153,44 @@ class LoanController extends Controller
         //dd($loans->toArray());
         return view('Loan.LHLoanApproval', ['loans' => $loans]);
     }
+    public function LoanSignature(Request $request) {
+        return $request;
+        $request->validate([
+            'id' => 'required|exists:users',
+            'signature' => 'required|image|max:2000',
+            'sign_of' => 'required|in:adm_incharge,cashier,vice_president',
+        ]);
+        $member = User::find($request->id);
+        $photograph = null;
+        if($request->hasFile('signature')) {
+            $extn = $request->file('signature')->getClientOriginalExtension();
+            $photograph = md5(str_random(20).time()) . '.' .$extn;
+            $request->file('signature')->storeAs(
+                'signature', $photograph
+            );
+        }
+        //dd(is_null(is_null($member->adm_incharge) || is_null($member->cashier)));
+        $error = false;
+        switch($request->sign_of) {
+            case "adm_incharge":
+            $member->adm_incharge = $photograph;
+            break;
+            case "cashier":
+            if(is_null($member->adm_incharge))
+            $error = "Not Approved By ADM. Incharge Yet";
+            else
+            $member->cashier = $photograph;
+            break;
+            case "vice_president":
+            if(is_null($member->adm_incharge) || is_null($member->cashier))
+            $error = "Not Approved By ADM. Incharge or Cashier Yet";
+            else
+            $member->vice_president = $photograph;
+        }
+        if(!$error) {
+        $member->save();
+        return redirect()->back()->with('message', 'Operation Completed Successfully.');
+        }
+        return redirect()->back()->with('error', $error);
+    }
 }

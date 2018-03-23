@@ -19,10 +19,10 @@ class CreateLoansTable extends Migration
             $table->unsignedInteger('member_id');
             $table->unsignedInteger('loan_incharge_id')->nullable();
             $table->unsignedInteger('cashier_id')->nullable();
-            $table->unsignedInteger('president_id')->nullable();
-            $table->char('loan_incharge_signature')->nullable();
-            $table->char('cashier_signature')->nullable();
-            $table->char('president_signature')->nullable();
+            $table->unsignedInteger('corecommittee_id')->nullable();
+            $table->char('loan_incharge_signature', 37)->nullable();
+            $table->char('cashier_signature', 37)->nullable();
+            $table->char('corecommittee_signature', 37)->nullable();
             $table->date('applied_on')->nullable();
             $table->date('sanction_on')->nullable();
             $table->date('given_on')->nullable();

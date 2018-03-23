@@ -16,4 +16,13 @@ class Loan extends Model
     public function member_detail() {
         return $this->hasOne('App\Models\User', 'id', 'member_id');
     }
+    public function loan_incharge() {
+        return $this->hasOne('App\Models\User', 'id', 'loan_incharge_id');
+    }
+    public function cashier() {
+        return $this->hasOne('App\Models\User', 'id', 'cashier_id');
+    }
+    public function corecommittee() {
+        return $this->hasOne('App\Models\User', 'id', 'corecommittee_id');
+    }
 }

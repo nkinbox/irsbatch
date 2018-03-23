@@ -59,15 +59,21 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                Deposit Fund
+                Pending Loan Priority
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <i class="batch-icon batch-icon-star"></i>
                 Loan Repayment Details
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="batch-icon batch-icon-star"></i>
+                Deposit Fund
             </a>
         </li>
         <li class="nav-item">
@@ -86,12 +92,6 @@
             <a class="nav-link" href="#">
                 <i class="batch-icon batch-icon-star"></i>
                 Acknowledge Help
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
-                <i class="batch-icon batch-icon-star"></i>
-                Pending Loan Priority
             </a>
         </li>
         <li class="nav-item">
