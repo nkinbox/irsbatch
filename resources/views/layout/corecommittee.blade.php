@@ -28,17 +28,29 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
+        <i class="batch-icon batch-icon-star"></i>
+        Pending Loan Priority
+        </a>
+    </li>
+    <li class="nav-item">
+            <a class="nav-link{{(request()->route()->getName() == 'LoanRepaymentView') ? ' active' : ''}}" href="{{ route('LoanRepaymentView') }}">
             <i class="batch-icon batch-icon-star"></i>
             Loan Repayment Detail
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link{{(request()->route()->getName() == 'LoanGiven') ? ' active' : ''}}" href="{{ route('LoanGiven') }}">
+            <i class="batch-icon batch-icon-star"></i>
+            Loan Given
+        </a>
+    </li>
+    <!--li class="nav-item">
         <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
             Loan Clearence Certificate
         </a>
-    </li>
+    </li-->
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="batch-icon batch-icon-star"></i>
@@ -131,12 +143,6 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link{{(request()->route()->getName() == 'LoanPriority') ? ' active' : ''}}" href="{{ route('LoanPriority') }}">
-        <i class="batch-icon batch-icon-star"></i>
-        Pending Loan Priority
-        </a>
-    </li>
-    <li class="nav-item">
             <a class="nav-link{{(request()->route()->getName() == 'CancellationList') ? ' active' : ''}}" href="{{ route('CancellationList') }}">
             <i class="batch-icon batch-icon-star"></i>
             Membership Cancellation
@@ -148,13 +154,6 @@
             Request Help
         </a>
     </li> -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="batch-icon batch-icon-star"></i>
-            Loan Given
-        </a>
-    </li>
-
 </ul>
 
 

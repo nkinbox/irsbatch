@@ -42,7 +42,7 @@ class LoanController extends Controller
             "loan_type" => "required|in:Normal,Emergency",
             "amount" => "required|numeric|".$validation,
             "cheque_number" => "required|min:1|max:".$size,
-            "cheque_number.*" => "nullable|numeric|distinct"
+            "cheque_number.*" => "nullable|numeric|distinct|digits:6"
         ]);
 
         $loan = new Loan;
@@ -118,12 +118,13 @@ class LoanController extends Controller
         }
         $request->validate($rule);
         $loan->status = "Pending";
-        $loan->save();
+        $Amount = 0.0;        
         foreach($request->cheque_number as $i => $number) {
             $where = [
                 "loan_id" => $loan->id,
                 "number" => $number
             ];
+            $Amount += $request->cheque_amount[$i];
             $set = [
                 "amount" => $request->cheque_amount[$i],
                 "cheque_date" => date('Y-m-d', strtotime($request->cheque_date[$i])),
@@ -131,14 +132,22 @@ class LoanController extends Controller
             ];
             DB::table('cheques')->whereRaw('loan_id = ? and number = ?', $where)->update($set);
         }
+        $loan->interest_amount = $Amount - $loan->amount;
+        $loan->save();
         return redirect()->route('LoanRequest');
     }
-    public function LoanPriority(Request $request) {
+    public function LoanStatus(Request $request) {
         $request->validate([
             "loan_id" => "required|numeric|exists:loans,id",
-            "status" => "required|in:Rejected,Priority"
+            "status" => "required|in:Rejected,Priority,Active"
         ]);
         $loan = Loan::find($request->loan_id);
+        if($request->status == "Active") {
+            if($loan->loan_incharge_id == null || $loan->cashier_id == null || $loan->corecommittee_id == null) {
+                return redirect()->back()->with('error', 'Signature of LoanIncharge or Cashier or CoreCommittee is Missing.');
+            }
+            $loan->sanction_on = date('Y-m-d');
+        }
         $loan->status = $request->status;
         $loan->save();
         return redirect()->back();
@@ -148,19 +157,23 @@ class LoanController extends Controller
         //dd($loans->toArray());
         return view('Loan.LoanPriority', ['loans' => $loans]); 
     }
+    public function LoanGiven() {
+        $loans = Loan::where('status', 'Active')->with(['member_detail', 'repayment_cheques'])->get();
+        //dd($loans->toArray());
+        return view('Loan.LoanGiven', ['loans' => $loans]); 
+    }
     public function LoanRequest() {
         $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
         //dd($loans->toArray());
         return view('Loan.LHLoanApproval', ['loans' => $loans]);
     }
     public function LoanSignature(Request $request) {
-        return $request;
         $request->validate([
-            'id' => 'required|exists:users',
+            'id' => 'required|exists:loans',
             'signature' => 'required|image|max:2000',
-            'sign_of' => 'required|in:adm_incharge,cashier,vice_president',
+            'sign_of' => 'required|in:loan_incharge_signature,cashier_signature,corecommittee_signature'
         ]);
-        $member = User::find($request->id);
+        $loan = Loan::find($request->id);
         $photograph = null;
         if($request->hasFile('signature')) {
             $extn = $request->file('signature')->getClientOriginalExtension();
@@ -169,28 +182,100 @@ class LoanController extends Controller
                 'signature', $photograph
             );
         }
-        //dd(is_null(is_null($member->adm_incharge) || is_null($member->cashier)));
-        $error = false;
         switch($request->sign_of) {
-            case "adm_incharge":
-            $member->adm_incharge = $photograph;
+            case "loan_incharge_signature":
+            $loan->loan_incharge_id = Auth::id();
+            $loan->loan_incharge_signature = $photograph;
             break;
-            case "cashier":
-            if(is_null($member->adm_incharge))
-            $error = "Not Approved By ADM. Incharge Yet";
-            else
-            $member->cashier = $photograph;
+            case "cashier_signature":
+            $loan->cashier_id = Auth::id();
+            $loan->cashier_signature = $photograph;
             break;
-            case "vice_president":
-            if(is_null($member->adm_incharge) || is_null($member->cashier))
-            $error = "Not Approved By ADM. Incharge or Cashier Yet";
-            else
-            $member->vice_president = $photograph;
+            case "corecommittee_signature":
+            $loan->corecommittee_id = Auth::id();
+            $loan->corecommittee_signature = $photograph;
         }
-        if(!$error) {
-        $member->save();
+        $loan->save();
         return redirect()->back()->with('message', 'Operation Completed Successfully.');
+    }
+    public function ViewLoan($loan_id) {
+        $loan = Loan::find($loan_id);
+        if($loan == null)
+        return redirect()->back();
+        return view('Loan.LoanDetails', ['loan' => $loan]);
+    }
+    public function GiveLoanView($loan_id) {
+        $loan = Loan::find($loan_id);
+        if($loan == null)
+        return redirect()->back();
+        return view('Loan.GiveLoan', ['loan' => $loan]);
+    }
+    public function GiveLoan(Request $request) {
+        $request->validate([
+            "loan_id" => "required|numeric|exists:loans,id",
+            "cheque_number.*" => "nullable|numeric|distinct|digits:6"
+        ]);
+        $i = 0;
+        $rule = [];
+        foreach($request->cheque_number as $number) {
+            if($number != null) {
+            $temp_rule = [
+                "cheque_amount.".$i => "required_with:cheque_number." .$i. "|numeric",
+                "cheque_date.".$i => "required_with:cheque_number." .$i. "|date"
+            ];
+            $rule = array_merge($rule, $temp_rule);
+            }
+            $i++;
         }
-        return redirect()->back()->with('error', $error);
+        $request->validate($rule);
+        $loan = Loan::find($request->loan_id);
+        $loan->given_on = date('Y-m-d');
+        $loan->save();
+        $insert = [];
+        foreach($request->cheque_number as $i => $number) {
+            $set = [
+                "loan_id" => $request->loan_id,
+                "number" => $number,
+                "used_for" => "loan",
+                "amount" => $request->cheque_amount[$i],
+                "cheque_date" => date('Y-m-d', strtotime($request->cheque_date[$i])),
+                "added_date" => date('Y-m-d')
+            ];
+            //DB::table('cheques')->whereRaw('loan_id = ? and number = ?', $where)->update($set);
+            $insert[] = $set;
+        }
+        Cheque::insert($insert);
+        return redirect()->route('LoanGiven');
+    
+    }
+    public function repaymentView() {
+        if(session('mode') == "member") {
+            $where = [
+                "member_id" => Auth::id(),
+                "status" => "Active"
+            ];
+        } else {
+            $where = [
+                "status" => "Active"
+            ];
+        }
+        $loans = Loan::where($where)->get();
+        return view('Loan.LoanRepayment', ['loans' => $loans]);
+    }
+    public function repaymentStatus(Request $request) {
+        $request->validate([
+            "loan_id" => "required|numeric|exists:loans,id",
+            "cheque_id" => "required|numeric|exists:cheques,id"
+        ]);
+        $cheque = Cheque::find($request->cheque_id);
+        $cheque->status = 1;
+        $cheque->save();
+        $chqs = Cheque::where(["loan_id" => $request->loan_id, "used_for" => "repayment", "status" => 0])->count();
+        if($chqs == 0) {
+            $loan = Loan::find($request->loan_id);
+            $loan->status = "Cleared";
+            $loan->save();
+        }
+        return redirect()->back();
     }
 }

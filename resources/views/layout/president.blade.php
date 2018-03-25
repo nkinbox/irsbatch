@@ -96,36 +96,6 @@
                 </a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="batch-icon batch-icon-star"></i>
-                    Loan Approval
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="batch-icon batch-icon-star"></i>
-                    Loan Given
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="batch-icon batch-icon-star"></i>
-                    Loan Repayment Detail
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="batch-icon batch-icon-compose-alt-2"></i>
-                    Loan Clearence Certificate
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="batch-icon batch-icon-star"></i>
-                    Pending Loan Priority
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link{{(request()->route()->getName() == 'MemberDetails') ? ' active' : ''}}" href="{{ route('MemberDetails') }}">
                     <i class="batch-icon batch-icon-star"></i>
                     Member Details

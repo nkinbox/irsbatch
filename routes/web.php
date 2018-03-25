@@ -71,12 +71,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/loan_form', 'Administration\LoanController@LoanForm')->name('LoanForm');
     Route::post('/loan_form', 'Administration\LoanController@AddLoan')->name('AddLoan');
     Route::get('/loan_priority', 'Administration\LoanController@LoanPriorityView')->name('LoanPriority');
-    Route::post('/loan_priority', 'Administration\LoanController@LoanPriority')->name('LoanPriority');
+    Route::post('/loan_status', 'Administration\LoanController@LoanStatus')->name('LoanStatus');
     Route::get('/collect_cheque', 'Administration\LoanController@ChequeCollectionForm')->name('ChequeCollectionForm');
     Route::post('/collect_cheque', 'Administration\LoanController@ChequeCollection')->name('ChequeCollection');
     Route::get('/loan_request', 'Administration\LoanController@LoanRequest')->name('LoanRequest');
     Route::post('/loan_signature', 'Administration\LoanController@LoanSignature')->name('LoanSignature');
-    
+    Route::get('/loan_given', 'Administration\LoanController@LoanGiven')->name('LoanGiven');
+    Route::get('/loan/view/{loan_id}', 'Administration\LoanController@ViewLoan')->name('ViewLoan');
+    Route::get('/loan/give/{loan_id}', 'Administration\LoanController@GiveLoanView')->name('GiveLoanView');
+    Route::post('/give_loan', 'Administration\LoanController@GiveLoan')->name('GiveLoan');
+    Route::get('/loan_repayment', 'Administration\LoanController@repaymentView')->name('LoanRepaymentView');
+    Route::post('/loan_repayment', 'Administration\LoanController@repaymentStatus')->name('LoanRepayment');
 });
 
 

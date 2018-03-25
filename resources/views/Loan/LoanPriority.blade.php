@@ -26,11 +26,8 @@
 <div class="card">
 <div class="card-body">
 <div class="row">
-        <div class="add-field" style="position: absolute;right: 0;">
-            <a href="{{ route('ChequeCollectionForm') }}"><button type="button" class="btn btn-primary">Collect Cheques</button></a>
-        </div>
     <div class="col-lg-12 pb-5">
-        <h2>Loan Request</h2>
+        <h2>Loan Priority</h2>
         
         <table class="table table-responsive">
             <thead>
@@ -63,8 +60,6 @@
                     <td>{{ count($loan->repayment_cheques) }}</td>
                     <td>{{ $loan->applied_on }}</td>
                     <td>{{ $loan->id }}</td>
-
-                    <!-- working here -->
                     <td>
                         @if($loan->loan_incharge_id == null)
                         @if(session('mode') == 'president' || session('mode') == 'corecommittee')
@@ -98,7 +93,7 @@
                         -
                         @endif
                         @else
-                        <img src="{{ asset('signature/'.$member->cashier_signature) }}" style="width:100px">
+                        <img src="{{ asset('signature/'.$loan->cashier_signature) }}" style="width:100px">
                         <br>
                         ( {{ $loan->cashier->name }} )
                         @endif
@@ -117,7 +112,7 @@
                         -
                         @endif
                         @else
-                        <img src="{{ asset('signature/'.$member->corecommittee_signature) }}" style="width:100px">
+                        <img src="{{ asset('signature/'.$loan->corecommittee_signature) }}" style="width:100px">
                         <br>
                         ( {{ $loan->corecommittee->name }} )
                         @endif
@@ -127,12 +122,12 @@
                     <td><a href="#" onclick="event.preventDefault();
                         document.getElementById('approve_form{{$loan->id}}').submit();">Approve</a> / <a href="#" onclick="event.preventDefault();
                         document.getElementById('decline_form{{$loan->id}}').submit();">Decline</a></td>
-                    <form id="approve_form{{$loan->id}}" action="{{ route('LoanPriority') }}" method="POST" style="display: none;">
+                    <form id="approve_form{{$loan->id}}" action="{{ route('LoanStatus') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                         <input type="hidden" name="loan_id" value="{{$loan->id}}">
-                        <input type="hidden" name="status" value="Priority">
+                        <input type="hidden" name="status" value="Active">
                     </form>
-                    <form id="decline_form{{$loan->id}}" action="{{ route('LoanPriority') }}" method="POST" style="display: none;">
+                    <form id="decline_form{{$loan->id}}" action="{{ route('LoanStatus') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                         <input type="hidden" name="loan_id" value="{{$loan->id}}">
                         <input type="hidden" name="status" value="Rejected">

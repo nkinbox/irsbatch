@@ -8,6 +8,6 @@ class Cheque extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        "loan_id", "number", "amount", "used_for"
+        "loan_id", "number", "amount", "cheque_date", "added_date", "used_for"
     ];
 }

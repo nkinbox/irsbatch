@@ -38,7 +38,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#">
+                <a class="nav-link{{(request()->route()->getName() == 'LoanRepaymentView') ? ' active' : ''}}" href="{{ route('LoanRepaymentView') }}">
                 <i class="batch-icon batch-icon-star"></i>
                 Loan Repayment Detail
             </a>
