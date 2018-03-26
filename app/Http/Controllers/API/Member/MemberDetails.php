@@ -23,7 +23,7 @@ class MemberDetails extends Controller
     }
     public function profile() {
         $id = Auth::id();
-        $user = User::where('id', $id)->with('introduced_by', 'position')->first();
+        $user = User::where('id', $id)->with('introduced_by', 'position', 'documents')->first();
         if($user != null) {
             return response()->json([
                 "success" => "1",

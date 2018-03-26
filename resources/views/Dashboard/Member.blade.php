@@ -1,4 +1,3 @@
-
 				<main class="main-content p-4" role="main">
                         <div class="row">
                             <div class="col-md-6 col-lg-6 col-xl-3 mb-4">
@@ -9,7 +8,7 @@
                                             <i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
                                         </div>
                                         <div class="tile-right">
-                                            <div class="tile-number">1,359</div>
+                                            <div class="tile-number">{{ $data['membership_fees'] }}</div>
                                             <a href="membership-detail.php"><div class="tile-description">MemberShip Statment</div></a>
                                         </div>
                                     </div>
@@ -22,7 +21,7 @@
                                             <i class="batch-icon batch-icon-tag-alt-2 batch-icon-xxl"></i>
                                         </div>
                                         <div class="tile-right">
-                                            <div class="tile-number">7,349.90</div>
+                                            <div class="tile-number">{{ $data['loan_repayment'] }}</div>
                                         <a href="loan-detail.php">	<div class="tile-description">Loan Repayment</div></a>
                                         </div>
                                     </div>

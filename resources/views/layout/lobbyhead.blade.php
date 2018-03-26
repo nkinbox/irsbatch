@@ -10,7 +10,7 @@
             <h6 class="nav-header">General</h6>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link{{(request()->route()->getName() == 'home') ? ' active' : ''}}" href="{{ route('home') }}">
                 <i class="batch-icon batch-icon-browser-alt"></i>
                 Dashboard 
             </a>

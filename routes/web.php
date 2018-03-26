@@ -82,10 +82,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/give_loan', 'Administration\LoanController@GiveLoan')->name('GiveLoan');
     Route::get('/loan_repayment', 'Administration\LoanController@repaymentView')->name('LoanRepaymentView');
     Route::post('/loan_repayment', 'Administration\LoanController@repaymentStatus')->name('LoanRepayment');
+    Route::get('/home', 'HomeController@index')->name('home');
 });
-
-
-Route::get('/home', 'HomeController@index')->name('home'); //required in switchmode
 Route::get('/', function () {
     return redirect('/login');
 });
