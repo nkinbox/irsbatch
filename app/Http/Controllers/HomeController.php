@@ -14,7 +14,7 @@ class HomeController extends Controller
         if(session('mode') == "member") {
             $data['membership_fees'] = MembershipFees::where(['member_id' => Auth::id()])->sum('paid_amount');
             $loan = Loan::where(['member_id' => Auth::id()])->with('repayment_cheques')->get();
-            dd($loan);
+            //dd($loan);
             $data['loan_repayment'] = $loan;
         }
         return view('home', ['data' => $data]);

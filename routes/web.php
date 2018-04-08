@@ -71,8 +71,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/loan_form', 'Administration\LoanController@LoanForm')->name('LoanForm');
     Route::post('/loan_form', 'Administration\LoanController@AddLoan')->name('AddLoan');
     Route::get('/loan_priority', 'Administration\LoanController@LoanPriorityView')->name('LoanPriority');
-    Route::post('/loan_status', 'Administration\LoanController@LoanStatus')->name('LoanStatus');
-    Route::get('/collect_cheque', 'Administration\LoanController@ChequeCollectionForm')->name('ChequeCollectionForm');
+    //Route::post('/loan_status', 'Administration\LoanController@LoanStatus')->name('LoanStatus');
+    Route::get('/collect_cheque/{loan_id}', 'Administration\LoanController@ChequeCollectionForm')->name('ChequeCollectionForm');
     Route::post('/collect_cheque', 'Administration\LoanController@ChequeCollection')->name('ChequeCollection');
     Route::get('/loan_request', 'Administration\LoanController@LoanRequest')->name('LoanRequest');
     Route::post('/loan_signature', 'Administration\LoanController@LoanSignature')->name('LoanSignature');

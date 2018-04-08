@@ -28,33 +28,30 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label class="active">Membership Code</label>
-                <input type="text" class="form-control" name="membership_code">
+                <input type="text" class="form-control" value="{{ $loan->member_detail->membership_code }}" readonly>
             </div>
             <div class="form-group">
                 <label class="active">Type of Loan</label>
-                <select class="form-control" name="loan_type">
-                    <option{{ (old('loan_type') == "Normal")?' selected':''}}>Normal</option>
-                    <option{{ (old('loan_type') == "Emergency")?' selected':''}}>Emergency</option>
-                </select>
+                <input type="text" class="form-control" value="{{ $loan->loan_type }}" readonly>
             </div>
+
             <div class="form-group">
-                <label class="active">Select Range</label>
-                <select class="form-control" name="loan_range" id="loan_range1">
-                    <option value="0" selected>-- Select Range --</option>
-                    <option value="1">0 - 49,000</option>
-                    <option value="2">50,000 - 99,999</option>
-                    <option value="3">1,00,000 - 1,49,999</option>
-                    <option value="4">1,50,000 - 1,99,999</option>
-                    <option value="5">2,00,000 - 2,99,999</option>
-                    <option value="6">3,00,000 +</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="active">Enter Amount</label>
-                <input type="number" name="amount" placeholder="Enter Amount" class="form-control">
+                <label class="active">Loan Amount</label>
+                <input type="number" placeholder="Enter Amount" class="form-control" value="{{ $loan->amount }}" readonly>
             </div>
             <hr>
-            <div id="ChequeContainer" class="row"></div>
+            <div id="ChequeContainer" class="row">
+                <?php $i = 0; ?>
+                @foreach($loan->repayment_cheques as $cheque)
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="active">{{ $i+1 }}. Cheque Number</label>
+                        <input type="number" class="form-control" name="cheque_number[{{$i++}}]" placeholder="Cheque Number" value="{{$cheque->number}}">
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <a href="#" id="addNewCheque" class="btn btn-default">Add Cheques</a>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

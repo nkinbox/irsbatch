@@ -24,8 +24,10 @@ class HelpController extends Controller
     public function getHelp(Request $request) {
         $request->validate([
             "help" => "required|in:Suspension,Removal,Dissmissal,Death",
-            "request_letter" => "required|file|mimetypes:application/pdf",
-            "offical_letter" => "required_unless:help,Death|nullable|file|mimetypes:application/pdf"
+            //"request_letter" => "required|file|mimetypes:application/pdf",
+            //"offical_letter" => "required_unless:help,Death|nullable|file|mimetypes:application/pdf"
+            "request_letter" => "required|file",
+            "offical_letter" => "required_unless:help,Death|nullable|file"
         ]);
         $request_letter = null;
         if($request->hasFile('request_letter')) {

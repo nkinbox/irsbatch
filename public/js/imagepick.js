@@ -116,5 +116,6 @@ $(document).ready(function() {
     e.preventDefault();
     var i = $("#ChequeContainer").children().length;
     var j = i + 1;
-    $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ j +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number"><input type="date" name="cheque_date['+ i +']" class="form-control"><input type="number" name="cheque_amount['+ i +']" class="form-control" placeholder="Cheque Amount"></div></div>');
+    //$("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ j +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number"><input type="date" name="cheque_date['+ i +']" class="form-control"><input type="number" name="cheque_amount['+ i +']" class="form-control" placeholder="Cheque Amount"></div></div>');
+    $("#ChequeContainer").append('<div class="col-md-3"><div class="form-group"><label class="active">'+ j +'. Cheque Number</label><input type="number" class="form-control" name="cheque_number['+ i +']" placeholder="Cheque Number"></div></div>');
 });

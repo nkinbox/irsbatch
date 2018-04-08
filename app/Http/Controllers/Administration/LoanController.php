@@ -42,7 +42,8 @@ class LoanController extends Controller
             "loan_type" => "required|in:Normal,Emergency",
             "amount" => "required|numeric|".$validation,
             "cheque_number" => "required|min:1|max:".$size,
-            "cheque_number.*" => "nullable|numeric|distinct|digits:6"
+            //"cheque_number.*" => "nullable|numeric|distinct|digits:6"
+            "cheque_number.*" => "nullable|numeric|distinct"
         ]);
 
         $loan = new Loan;
@@ -62,11 +63,18 @@ class LoanController extends Controller
             ];
             }
         }
+        if(Auth::user()->position_id == 0)
+        $interest = 0.005;
+        else
+        $interest = 0.0025;
+        $amount = $request->amount*$interest + $request->amount;
+        $emi = $amount/count($cheques);
         Cheque::insert($cheques);
-        return redirect()->route('LoanPriority');
+        return redirect()->route('LoanPriority')->with('message', 'Please submit Cheques to the Lobby Head within 1 month. Your Loan Priority will be visible in this tab when Cheques are submitted. Your EMI would be '.$emi);
     }
-    public function ChequeCollectionForm() {
-        return view('Loan.ChequeCollection');
+    public function ChequeCollectionForm($loan_id) {
+        $loan = Loan::find($loan_id);
+        return view('Loan.ChequeCollection', ['loan' => $loan]);
     }
     public function ChequeCollection(Request $request) {
         $request->validate([
@@ -95,7 +103,7 @@ class LoanController extends Controller
         $member = User::where('membership_code', $request->membership_code)->first();
         $loan = Loan::where([
             'member_id' => $member->id,
-            "status" => "temp"
+            "status" => "Temp"
             ])->with('repayment_cheques')->first();
         $cheques = implode(",", array_column($loan->repayment_cheques->toArray(), 'number'));
         $request->validate([
@@ -163,7 +171,7 @@ class LoanController extends Controller
         return view('Loan.LoanGiven', ['loans' => $loans]); 
     }
     public function LoanRequest() {
-        $loans = Loan::where('status', 'Pending')->with(['member_detail', 'repayment_cheques'])->get();
+        $loans = Loan::where('status', 'Temp')->with(['member_detail', 'repayment_cheques'])->get();
         //dd($loans->toArray());
         return view('Loan.LHLoanApproval', ['loans' => $loans]);
     }

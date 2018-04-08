@@ -29,9 +29,10 @@ class GrievanceController extends Controller
     }
     public function add(Request $request) {
         $request->validate([
-            "member_text" => "required|string|min:50|max:2000",
+            "member_text" => "required|string|min:1|max:2000",
             "member_signature" => "required|image|min:2|max:2000",
-            "docs" => "sometimes|file|mimetypes:application/pdf"
+            //"docs" => "sometimes|file|mimetypes:application/pdf"
+            "docs" => "sometimes|file"
         ]);
         $signature = null;
         if($request->hasFile('member_signature')) {
@@ -69,7 +70,7 @@ class GrievanceController extends Controller
         $g = Grievance::find($request->id);
         if($g->stage == "LobbyHead" && Auth::user()->position_id == 11) {
             $request->validate([
-                "lh_text" => "nullable|string|min:50|max:2000",
+                "lh_text" => "nullable|string|min:1|max:2000",
                 "lobbyhead_signature" => "required|image|min:2|max:2000",
             ]);
             $signature = null;
@@ -103,7 +104,7 @@ class GrievanceController extends Controller
             $g->save();
         } elseif($g->stage == "CoreCommittee" && Auth::user()->position_id < 11 && Auth::user()->position_id > 1) {
             $request->validate([
-                "cc_text" => "required|string|min:50|max:2000",
+                "cc_text" => "required|string|min:1|max:2000",
             ]);
             $g->stage = "President";
             $g->corecommittee_id = Auth::id();

@@ -55,7 +55,7 @@
         <li class="nav-item">
                 <a class="nav-link{{(request()->route()->getName() == 'LoanRequest') ? ' active' : ''}}" href="{{ route('LoanRequest') }}">
                 <i class="batch-icon batch-icon-star"></i>
-                Loan Approval
+                Cheque Collection
             </a>
         </li>
         <li class="nav-item">

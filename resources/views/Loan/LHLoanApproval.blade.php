@@ -7,11 +7,6 @@
 <div class="card">
 <div class="card-body">
 <div class="row">
-    @if(session('mode') == "lobbyhead")
-        <div class="add-field" style="position: absolute;right: 0;">
-            <a href="{{ route('ChequeCollectionForm') }}"><button type="button" class="btn btn-primary">Collect Cheques</button></a>
-        </div>
-    @endif
     <div class="col-lg-12 pb-5">
         <h2>Loan Request</h2>
         
@@ -43,19 +38,7 @@
                     <td>{{ count($loan->repayment_cheques) }}</td>
                     <td>{{ $loan->applied_on }}</td>
                     <td>{{ $loan->id }}</td>
-                    <td><a href="#" onclick="event.preventDefault();
-                        document.getElementById('approve_form{{$loan->id}}').submit();">Approve</a> / <a href="#" onclick="event.preventDefault();
-                        document.getElementById('decline_form{{$loan->id}}').submit();">Decline</a></td>
-                    <form id="approve_form{{$loan->id}}" action="{{ route('LoanStatus') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
-                        <input type="hidden" name="status" value="Priority">
-                    </form>
-                    <form id="decline_form{{$loan->id}}" action="{{ route('LoanStatus') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
-                        <input type="hidden" name="status" value="Rejected">
-                    </form>
+                    <td><a href="{{ route('ChequeCollectionForm', ['loan_id' => $loan->id ]) }}">Collect Cheque</a></td>
                 </tr>
             @endforeach
             </tbody>

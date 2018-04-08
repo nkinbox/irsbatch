@@ -279,7 +279,8 @@ class AdmissionController extends Controller
             $request->validate([
                 "reason" => "required|string|min:10|max:2500",
                 "signature" => "required|image|min:2|max:2000",
-                "letter" => "required|file|mimetypes:application/pdf"
+                //"letter" => "required|file|mimetypes:application/pdf"
+                "letter" => "required|file"
             ]);
             $mc = MembershipCancellation::where([
                 'member_id' => Auth::id(),
